@@ -15,9 +15,11 @@ Return ONLY valid JSON (no markdown wrapping) matching exactly this format:
 {{"article": "An extremely brief 3-4 sentence summary of the topic.",
  "flashcards": {{"flashcards": [{{"concept": "Key Term 1", "description": "A very brief 1-sentence definition"}}, {{"concept": "Key Term 2", "description": "A very brief 1-sentence definition"}}]}},
  "quiz": {{"questions": [
-     {{"question": "A specific question about the topic?", "options": ["Real Option 1", "Real Option 2", "Real Option 3", "Real Option 4"], "correct_answer": "Real Option 2", "explanation": "1 short sentence explaining why Option 2 is correct"}},
-     {{"question": "Another specific question?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option C", "explanation": "1 short sentence explaining why Option C is correct"}},
-     {{"question": "A third question?", "options": ["Choice 1", "Choice 2", "Choice 3", "Choice 4"], "correct_answer": "Choice 1", "explanation": "1 short sentence explaining why Choice 1 is correct"}}
+     {{"question": "Question 1 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice B", "explanation": "Why B is correct"}},
+     {{"question": "Question 2 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice C", "explanation": "Why C is correct"}},
+     {{"question": "Question 3 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice D", "explanation": "Why D is correct"}},
+     {{"question": "Question 4 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice A", "explanation": "Why A is correct"}},
+     {{"question": "Question 5 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice B", "explanation": "Why B is correct"}}
  ]}}
 }}"""
 
