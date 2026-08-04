@@ -1,0 +1,19 @@
+# Development Environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# IDEs and Editors
+.vscode/
+.idea/
+.gemini/
+
+# Sensitive Information
+.env
+integrated.db
+*.log
+
+# macOS
+.DS_Store
