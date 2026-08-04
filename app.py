@@ -277,13 +277,38 @@ def inject_custom_style():
         font-weight: 500 !important;
     }}
     
-    [data-testid="stForm"] input {{
+    div[data-baseweb="input"] {{
         background-color: #000000 !important;
+        border-color: #475569 !important;
+        border-radius: 8px !important;
+    }}
+    
+    div[data-baseweb="input"] * {{
         color: #ffffff !important;
-        border: 2px solid #475569 !important;
+        background-color: transparent !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }}
+    
+    [data-testid="stForm"] input {{
+        background-color: transparent !important;
+        color: #ffffff !important;
         font-weight: 600 !important;
         font-size: 1.15rem !important;
-        padding: 12px !important;
+    }}
+    
+    /* GLOBAL MARKDOWN BRIGHTNESS */
+    [data-testid="stMarkdownContainer"] * {{
+        color: #ffffff !important;
+    }}
+    
+    /* FIX STREAMLIT TABS BRIGHTNESS */
+    button[data-baseweb="tab"] * {{
+        color: #e2e8f0 !important;
+        font-weight: 600 !important;
+        font-size: 1.1rem !important;
+    }}
+    button[data-baseweb="tab"][aria-selected="true"] * {{
+        color: #60a5fa !important;
     }}
     
     [data-testid="stForm"] button {{
