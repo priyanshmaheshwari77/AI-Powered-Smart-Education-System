@@ -235,6 +235,29 @@ def inject_custom_style():
     }}
 
     /* =========================================
+       GLOBAL BUTTON STYLING (Solid Light Mode)
+       ========================================= */
+    .stButton > button {{
+        background-color: #ffffff !important;
+        color: #111111 !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.2s ease !important;
+    }}
+    
+    .stButton > button:hover {{
+        background-color: #f8fafc !important;
+        border-color: #94a3b8 !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+    }}
+    
+    .stButton > button * {{
+        color: #111111 !important;
+    }}
+
+    /* =========================================
        LOGIN PAGE STYLING (Solid Light Mode)
        ========================================= */
     [data-testid="stForm"] {{
