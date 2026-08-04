@@ -277,19 +277,40 @@ def inject_custom_style():
         font-weight: 500 !important;
     }}
     
-    div[data-baseweb="input"] {{
+    /* FIX CAPTIONS & INSTRUCTIONS */
+    [data-testid="stCaptionContainer"] * {{
+        color: #f8fafc !important;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        opacity: 1 !important;
+    }}
+    
+    [data-testid="InputInstructions"], 
+    span[data-testid="InputInstructions"], 
+    div[data-testid="InputInstructions"] {{
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }}
+    
+    div[data-baseweb="input"],
+    div[data-baseweb="base-input"] {{
         background-color: #000000 !important;
         border-color: #475569 !important;
         border-radius: 8px !important;
     }}
     
-    div[data-baseweb="input"] * {{
+    div[data-baseweb="input"] *,
+    div[data-baseweb="base-input"] * {{
         color: #ffffff !important;
         background-color: transparent !important;
+        background: transparent !important;
         -webkit-text-fill-color: #ffffff !important;
     }}
     
-    [data-testid="stForm"] input {{
+    [data-testid="stForm"] input,
+    .stTextInput input,
+    .stTextInput textarea {{
         background-color: transparent !important;
         color: #ffffff !important;
         font-weight: 600 !important;
@@ -306,6 +327,7 @@ def inject_custom_style():
         color: #e2e8f0 !important;
         font-weight: 600 !important;
         font-size: 1.1rem !important;
+        opacity: 1 !important;
     }}
     button[data-baseweb="tab"][aria-selected="true"] * {{
         color: #60a5fa !important;
