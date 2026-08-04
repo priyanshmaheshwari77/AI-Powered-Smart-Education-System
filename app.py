@@ -152,7 +152,8 @@ def inject_custom_style():
 
     /* Force text color in sidebar */
     section[data-testid="stSidebar"] * {{
-        color: #f8fafc !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
     }}
 
     /* 6. Bottom Container */
@@ -183,10 +184,11 @@ def inject_custom_style():
         caret-color: #ffffff !important;
         border: 2px solid #3b82f6 !important;
         border-radius: 24px !important;
-        padding: 14px 20px !important;
+        padding: 16px 20px !important;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
         outline: none !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
+        font-size: 1.1rem !important;
     }}
     
     .stChatInput textarea::placeholder {{
@@ -225,13 +227,14 @@ def inject_custom_style():
     }}
     
     [data-testid="stChatMessage"] * {{
-        color: #f8fafc !important;
+        color: #ffffff !important;
     }}
     
     [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] p {{
-        font-size: 1.05rem !important;
-        line-height: 1.6 !important;
-        color: #e2e8f0 !important;
+        font-size: 1.15rem !important;
+        line-height: 1.7 !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
     }}
 
     /* =========================================
@@ -269,13 +272,18 @@ def inject_custom_style():
     }}
     
     [data-testid="stForm"] * {{
-        color: #f8fafc !important;
+        color: #ffffff !important;
+        font-size: 1.1rem !important;
+        font-weight: 500 !important;
     }}
     
     [data-testid="stForm"] input {{
-        background-color: #0f172a !important;
+        background-color: #000000 !important;
         color: #ffffff !important;
-        border: 1px solid #475569 !important;
+        border: 2px solid #475569 !important;
+        font-weight: 600 !important;
+        font-size: 1.15rem !important;
+        padding: 12px !important;
     }}
     
     [data-testid="stForm"] button {{
@@ -486,10 +494,13 @@ with main_container:
                     padding: 20px;
                     margin-bottom: 20px;
                     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                    color: #f8fafc;
+                    color: #ffffff;
+                    font-size: 1.1rem;
                 }
-                .quiz-card p, .quiz-card label {
-                    color: #f8fafc !important;
+                .quiz-card p, .quiz-card label, .quiz-card div {
+                    color: #ffffff !important;
+                    font-weight: 500 !important;
+                    font-size: 1.1rem !important;
                 }
                 </style>
                 """, unsafe_allow_html=True)
