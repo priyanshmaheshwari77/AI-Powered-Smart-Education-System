@@ -88,7 +88,8 @@ def inject_custom_style():
     .viewerBadge_container__1QSob {{display: none !important;}}
 
     /* FORCE VISIBILITY OF SIDEBAR TOGGLE - Natural Position */
-    [data-testid="stSidebarCollapsedControl"] {{
+    [data-testid="stSidebarCollapsedControl"],
+    [data-testid="collapsedControl"] {{
         display: flex !important;
         visibility: visible !important;
         z-index: 1000000 !important;
@@ -106,14 +107,16 @@ def inject_custom_style():
         box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
     }}
     
-    [data-testid="stSidebarCollapsedControl"]:hover {{
+    [data-testid="stSidebarCollapsedControl"]:hover,
+    [data-testid="collapsedControl"]:hover {{
         background-color: #334155 !important;
         border-color: #475569 !important;
         transform: scale(1.08) !important;
     }}
     
     /* Ensure the icon inside is visible */
-    [data-testid="stSidebarCollapsedControl"] svg {{
+    [data-testid="stSidebarCollapsedControl"] svg,
+    [data-testid="collapsedControl"] svg {{
         fill: #ffffff !important;
         stroke: #ffffff !important;
         width: 32px !important;
@@ -178,6 +181,14 @@ def inject_custom_style():
         background-color: transparent !important;
     }}
     
+    /* Fix white bounding box around chat input */
+    [data-testid="stChatInput"], 
+    div.stChatContainer,
+    .stChatFloatingInputContainer {{
+        background-color: transparent !important;
+        background: transparent !important;
+    }}
+
     .stChatInput textarea {{
         background-color: #1e293b !important;
         color: #ffffff !important;
