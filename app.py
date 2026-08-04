@@ -94,30 +94,30 @@ def inject_custom_style():
         z-index: 1000000 !important;
         color: #ffffff !important;
         background-color: #1e293b !important;
-        width: 44px !important;
-        height: 44px !important;
-        border-radius: 12px !important;
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 14px !important;
         border: 1px solid #334155 !important;
         transition: all 0.3s ease !important;
         cursor: pointer !important;
         pointer-events: auto !important;
-        margin-top: 10px !important; 
-        margin-left: 10px !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
+        margin-top: 15px !important; 
+        margin-left: 15px !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
     }}
     
     [data-testid="stSidebarCollapsedControl"]:hover {{
         background-color: #334155 !important;
         border-color: #475569 !important;
-        transform: scale(1.05) !important;
+        transform: scale(1.08) !important;
     }}
     
     /* Ensure the icon inside is visible */
     [data-testid="stSidebarCollapsedControl"] svg {{
         fill: #ffffff !important;
         stroke: #ffffff !important;
-        width: 24px !important;
-        height: 24px !important;
+        width: 32px !important;
+        height: 32px !important;
     }}
 
     /* =========================================
