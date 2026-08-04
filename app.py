@@ -33,15 +33,15 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def add_premium_background():
-    # Override with Solid Light Theme Background
+    # Override with Solid High-Contrast Dark Theme Background
     st.markdown("""
     <style>
         [data-testid="stAppViewContainer"] {
-            background-color: #f0f4f8 !important;
+            background-color: #0f172a !important;
             background-image: none !important;
         }
         body {
-            background-color: #f0f4f8 !important;
+            background-color: #0f172a !important;
         }
         div[data-testid="stAppViewBlockContainer"] {
             background-color: transparent !important;
@@ -92,41 +92,41 @@ def inject_custom_style():
         display: flex !important;
         visibility: visible !important;
         z-index: 1000000 !important;
-        color: #111111 !important;
-        background-color: #ffffff !important;
+        color: #ffffff !important;
+        background-color: #1e293b !important;
         width: 44px !important;
         height: 44px !important;
         border-radius: 12px !important;
-        border: 1px solid #cccccc !important;
+        border: 1px solid #334155 !important;
         transition: all 0.3s ease !important;
         cursor: pointer !important;
         pointer-events: auto !important;
         margin-top: 10px !important; 
         margin-left: 10px !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
     }}
     
     [data-testid="stSidebarCollapsedControl"]:hover {{
-        background-color: #f8f9fa !important;
-        border-color: #aaaaaa !important;
+        background-color: #334155 !important;
+        border-color: #475569 !important;
         transform: scale(1.05) !important;
     }}
     
     /* Ensure the icon inside is visible */
     [data-testid="stSidebarCollapsedControl"] svg {{
-        fill: #111111 !important;
-        stroke: #111111 !important;
+        fill: #ffffff !important;
+        stroke: #ffffff !important;
         width: 24px !important;
         height: 24px !important;
     }}
 
     /* =========================================
-       SOLID LIGHT LAYERS
+       SOLID DARK LAYERS
        ========================================= */
        
     html, body {{
-        background-color: #f0f4f8 !important;
-        color: #111111 !important;
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
     }}
 
     /* 4. The inner content block (centering constraint) */
@@ -138,11 +138,11 @@ def inject_custom_style():
 
     /* 5. Sidebar Styling */
     section[data-testid="stSidebar"] {{
-        background-color: #ffffff !important; 
-        background: #ffffff !important;
-        border-right: 1px solid #dddddd !important;
+        background-color: #020617 !important; 
+        background: #020617 !important;
+        border-right: 1px solid #1e293b !important;
         z-index: 99999 !important;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.05) !important;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.5) !important;
     }}
 
     section[data-testid="stSidebar"] > div {{
@@ -152,7 +152,7 @@ def inject_custom_style():
 
     /* Force text color in sidebar */
     section[data-testid="stSidebar"] * {{
-        color: #111111 !important;
+        color: #f8fafc !important;
     }}
 
     /* 6. Bottom Container */
@@ -178,19 +178,19 @@ def inject_custom_style():
     }}
     
     .stChatInput textarea {{
-        background-color: #ffffff !important;
-        color: #111111 !important;
-        caret-color: #111111 !important;
-        border: 2px solid #00c853 !important;
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        caret-color: #ffffff !important;
+        border: 2px solid #3b82f6 !important;
         border-radius: 24px !important;
         padding: 14px 20px !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
         outline: none !important;
         font-weight: 500 !important;
     }}
     
     .stChatInput textarea::placeholder {{
-        color: #666666 !important;
+        color: #94a3b8 !important;
         opacity: 1 !important;
     }}
     
@@ -198,10 +198,10 @@ def inject_custom_style():
     .stChatInput textarea:active,
     .stChatInput textarea:focus-visible,
     .stChatInput textarea:focus-within {{
-        background-color: #ffffff !important;
-        border: 2px solid #00c853 !important;
-        border-color: #00c853 !important;
-        box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2) !important;
+        background-color: #0f172a !important;
+        border: 2px solid #60a5fa !important;
+        border-color: #60a5fa !important;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
         outline: none !important;
         outline-color: transparent !important;
     }}
@@ -213,34 +213,34 @@ def inject_custom_style():
     }}
 
     /* =========================================
-       CHAT MESSAGE STYLING (Solid Light Mode)
+       CHAT MESSAGE STYLING (Solid Dark Mode)
        ========================================= */
     [data-testid="stChatMessage"] {{
-        background-color: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
         border-radius: 12px !important;
         padding: 1.5rem !important;
         margin-bottom: 1rem !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
     }}
     
     [data-testid="stChatMessage"] * {{
-        color: #111111 !important;
+        color: #f8fafc !important;
     }}
     
     [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] p {{
         font-size: 1.05rem !important;
         line-height: 1.6 !important;
-        color: #111111 !important;
+        color: #e2e8f0 !important;
     }}
 
     /* =========================================
-       GLOBAL BUTTON STYLING (Solid Light Mode)
+       GLOBAL BUTTON STYLING (Solid Dark Mode)
        ========================================= */
     .stButton > button {{
-        background-color: #ffffff !important;
-        color: #111111 !important;
-        border: 1px solid #cbd5e1 !important;
+        background-color: #3b82f6 !important;
+        color: #ffffff !important;
+        border: none !important;
         border-radius: 8px !important;
         font-weight: 600 !important;
         padding: 0.5rem 1rem !important;
@@ -248,38 +248,38 @@ def inject_custom_style():
     }}
     
     .stButton > button:hover {{
-        background-color: #f8fafc !important;
-        border-color: #94a3b8 !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+        background-color: #60a5fa !important;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
+        transform: translateY(-1px) !important;
     }}
     
     .stButton > button * {{
-        color: #111111 !important;
+        color: #ffffff !important;
     }}
 
     /* =========================================
-       LOGIN PAGE STYLING (Solid Light Mode)
+       LOGIN PAGE STYLING (Solid Dark Mode)
        ========================================= */
     [data-testid="stForm"] {{
-        background-color: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
         border-radius: 16px !important;
         padding: 3rem 2rem !important;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
     }}
     
     [data-testid="stForm"] * {{
-        color: #111111 !important;
+        color: #f8fafc !important;
     }}
     
     [data-testid="stForm"] input {{
-        background-color: #f8f9fa !important;
-        color: #111111 !important;
-        border: 1px solid #cccccc !important;
+        background-color: #0f172a !important;
+        color: #ffffff !important;
+        border: 1px solid #475569 !important;
     }}
     
     [data-testid="stForm"] button {{
-        background-color: #2563eb !important;
+        background-color: #10b981 !important;
         color: white !important;
         font-weight: bold !important;
         border: none !important;
@@ -287,9 +287,9 @@ def inject_custom_style():
     }}
     
     [data-testid="stForm"] button:hover {{
-        background-color: #1d4ed8 !important;
+        background-color: #34d399 !important;
         transform: scale(1.02) !important;
-        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3) !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
     }}
 
     /* =========================================
@@ -422,8 +422,8 @@ with main_container:
     if not st.session_state.messages:
         st.markdown("""
             <div style="text-align: center; margin-bottom: 3rem; margin-top: 5rem;">
-                <h1 style="font-size: 4rem; font-weight: 900; color: #0f172a;">AI Powered Smart Education System</h1>
-                <p style="font-size: 1.2rem; color: #475569;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
+                <h1 style="font-size: 4rem; font-weight: 900; color: #ffffff;">AI Powered Smart Education System</h1>
+                <p style="font-size: 1.2rem; color: #94a3b8;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -439,8 +439,8 @@ with main_container:
         if isinstance(content, dict):
             # 1. Article
             st.markdown("""
-            <div style="background: #f1f5f9; border-left: 5px solid #0ea5e9; padding: 10px 15px; margin: 20px 0; border-radius: 4px;">
-                <h3 style="margin: 0; color: #0369a1; font-weight: bold;">📚 Course Material</h3>
+            <div style="background: #1e293b; border-left: 5px solid #38bdf8; padding: 10px 15px; margin: 20px 0; border-radius: 4px;">
+                <h3 style="margin: 0; color: #38bdf8; font-weight: bold;">📚 Course Material</h3>
             </div>
             """, unsafe_allow_html=True)
             st.markdown(content.get('article', ''))
@@ -449,8 +449,8 @@ with main_container:
             flashcards = content.get('flashcards')
             if flashcards and 'flashcards' in flashcards:
                 st.markdown("""
-                <div style="background: #f3e8ff; border-left: 5px solid #a855f7; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #7e22ce; font-weight: bold;">🎴 Concept Flashcards</h3>
+                <div style="background: #1e293b; border-left: 5px solid #a855f7; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
+                    <h3 style="margin: 0; color: #d8b4fe; font-weight: bold;">🎴 Concept Flashcards</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 # Create a horizontal scroll or grid for flashcards
@@ -458,9 +458,9 @@ with main_container:
                 for idx, fc in enumerate(flashcards['flashcards']):
                     with cols[idx % 3]:
                         st.markdown(f"""
-                        <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #ffffff; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <h4 style="margin-top:0; color: #6d28d9;">{fc['concept']}</h4>
-                            <p style="font-size: 0.9rem; color: #333333;">{fc['description']}</p>
+                        <div style="border: 1px solid #334155; border-radius: 12px; padding: 15px; background: #0f172a; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                            <h4 style="margin-top:0; color: #c084fc;">{fc['concept']}</h4>
+                            <p style="font-size: 0.9rem; color: #e2e8f0;">{fc['description']}</p>
                         </div>
                         """, unsafe_allow_html=True)
                         
@@ -472,24 +472,24 @@ with main_container:
             quiz = content.get('quiz')
             if quiz and 'questions' in quiz:
                 st.markdown("""
-                <div style="background: #fce7f3; border-left: 5px solid #ec4899; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #be185d; font-weight: bold;">🧠 Knowledge Check</h3>
+                <div style="background: #1e293b; border-left: 5px solid #ec4899; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
+                    <h3 style="margin: 0; color: #f472b6; font-weight: bold;">🧠 Knowledge Check</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 st.markdown("""
                 <style>
                 .quiz-card {
-                    background: #ffffff;
-                    border: 1px solid #e2e8f0;
-                    border-left: 4px solid #2563eb;
+                    background: #1e293b;
+                    border: 1px solid #334155;
+                    border-left: 4px solid #3b82f6;
                     border-radius: 12px;
                     padding: 20px;
                     margin-bottom: 20px;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-                    color: #111111;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    color: #f8fafc;
                 }
                 .quiz-card p, .quiz-card label {
-                    color: #111111 !important;
+                    color: #f8fafc !important;
                 }
                 </style>
                 """, unsafe_allow_html=True)
