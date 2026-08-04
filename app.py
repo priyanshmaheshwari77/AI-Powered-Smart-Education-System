@@ -279,7 +279,7 @@ def inject_custom_style():
     }}
     
     [data-testid="stForm"] button {{
-        background-color: #10b981 !important;
+        background-color: #3b82f6 !important;
         color: white !important;
         font-weight: bold !important;
         border: none !important;
@@ -287,9 +287,9 @@ def inject_custom_style():
     }}
     
     [data-testid="stForm"] button:hover {{
-        background-color: #34d399 !important;
+        background-color: #60a5fa !important;
         transform: scale(1.02) !important;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
     }}
 
     /* =========================================
