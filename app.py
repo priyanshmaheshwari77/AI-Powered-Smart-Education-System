@@ -33,69 +33,26 @@ def get_base64_of_bin_file(bin_file):
     return base64.b64encode(data).decode()
 
 def add_premium_background():
-    try:
-        bin_str = get_base64_of_bin_file('background.png')
-        bg_img_css = f"""
-        <style>
-        [data-testid="stAppViewContainer"] {{
-            background-image: url("data:image/png;base64,{bin_str}");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-        }}
-        /* Ensure transparency for internal blocks */
-        div[data-testid="stAppViewBlockContainer"] {{
+    # Override with Solid Light Theme Background
+    st.markdown("""
+    <style>
+        [data-testid="stAppViewContainer"] {
+            background-color: #f0f4f8 !important;
+            background-image: none !important;
+        }
+        body {
+            background-color: #f0f4f8 !important;
+        }
+        div[data-testid="stAppViewBlockContainer"] {
             background-color: transparent !important;
-            background: transparent !important;
-        }}
-        </style>
-        """
-        st.markdown(bg_img_css, unsafe_allow_html=True)
-    except Exception as e:
-        # Fallback to existing glow if image not found
-        st.markdown("""
-        <div class="purple-glow top-left"></div>
-        <div class="purple-glow bottom-right"></div>
-        <div class="purple-glow center-left"></div>
-        <style>
-            .purple-glow {
-                position: fixed;
-                width: 1000px;
-                height: 1000px;
-                border-radius: 50%;
-                background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
-                filter: blur(140px);
-                z-index: -1;
-                pointer-events: none;
-            }
-            .top-left {
-                top: -400px;
-                left: -400px;
-            }
-            .bottom-right {
-                bottom: -400px;
-                right: -400px;
-            }
-            .center-left {
-                top: 50%;
-                left: -600px;
-                transform: translateY(-50%);
-                width: 800px;
-                height: 800px;
-                background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            }
-            body {
-                background-color: #000000 !important;
-            }
-        </style>
-        """, unsafe_allow_html=True)
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
 # Add background immediately
 add_premium_background()
 
 import uuid
-
 
 # --- Session State Initialization ---
 if "logged_in" not in st.session_state:
@@ -135,50 +92,43 @@ def inject_custom_style():
         display: flex !important;
         visibility: visible !important;
         z-index: 1000000 !important;
-        color: white !important;
-        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #111111 !important;
+        background-color: #ffffff !important;
         width: 44px !important;
         height: 44px !important;
         border-radius: 12px !important;
-        border: 1px solid rgba(255,255,255,0.2) !important;
-        backdrop-filter: blur(5px) !important;
+        border: 1px solid #cccccc !important;
         transition: all 0.3s ease !important;
         cursor: pointer !important;
         pointer-events: auto !important;
         margin-top: 10px !important; 
         margin-left: 10px !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
     }}
     
     [data-testid="stSidebarCollapsedControl"]:hover {{
-        background-color: rgba(255, 255, 255, 0.2) !important;
-        border-color: white !important;
+        background-color: #f8f9fa !important;
+        border-color: #aaaaaa !important;
         transform: scale(1.05) !important;
     }}
     
     /* Ensure the icon inside is visible */
     [data-testid="stSidebarCollapsedControl"] svg {{
-        fill: white !important;
-        stroke: white !important;
+        fill: #111111 !important;
+        stroke: #111111 !important;
         width: 24px !important;
         height: 24px !important;
     }}
 
     /* =========================================
-       FORCE TRANSPARENCY ON ALL STREAMLIT LAYERS
+       SOLID LIGHT LAYERS
        ========================================= */
-    
-    /* Force transparency on main containers */
-    div[data-testid="stAppViewBlockContainer"] {{
-        background-color: transparent !important;
-        background: transparent !important;
-    }}
-
+       
     html, body {{
-        background-color: transparent !important;
+        background-color: #f0f4f8 !important;
+        color: #111111 !important;
     }}
 
-    /* 3. Background Styling is handled by add_premium_background */
-    
     /* 4. The inner content block (centering constraint) */
     .block-container {{
         background-color: transparent !important;
@@ -186,14 +136,13 @@ def inject_custom_style():
         max-width: 1100px;
     }}
 
-    /* 5. Sidebar transparency & Positioning */
-    /* 5. Sidebar transparency & Positioning */
+    /* 5. Sidebar Styling */
     section[data-testid="stSidebar"] {{
-        background-color: rgba(0, 0, 0, 0.1) !important; 
-        background: rgba(0, 0, 0, 0.1) !important;
-        backdrop-filter: blur(1px);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: #ffffff !important; 
+        background: #ffffff !important;
+        border-right: 1px solid #dddddd !important;
         z-index: 99999 !important;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.05) !important;
     }}
 
     section[data-testid="stSidebar"] > div {{
@@ -203,16 +152,10 @@ def inject_custom_style():
 
     /* Force text color in sidebar */
     section[data-testid="stSidebar"] * {{
-        color: white !important;
+        color: #111111 !important;
     }}
 
-    /* Move sidebar content up */
-    section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {{
-        padding-top: 1rem !important;
-        gap: 0.5rem !important;
-    }}
-    
-    /* 6. Bottom Container - FORCE TRANSPARENCY */
+    /* 6. Bottom Container */
     div[data-testid="stBottom"],
     div[data-testid="stBottom"] > div {{
         background-color: transparent !important;
@@ -235,19 +178,19 @@ def inject_custom_style():
     }}
     
     .stChatInput textarea {{
-        background-color: rgba(255, 255, 255, 0.95) !important;
+        background-color: #ffffff !important;
         color: #111111 !important;
         caret-color: #111111 !important;
-        border: 2px solid rgba(0, 200, 83, 0.6) !important;
+        border: 2px solid #00c853 !important;
         border-radius: 24px !important;
         padding: 14px 20px !important;
-        box-shadow: 0 0 8px rgba(0, 200, 83, 0.15) !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
         outline: none !important;
         font-weight: 500 !important;
     }}
     
     .stChatInput textarea::placeholder {{
-        color: #555555 !important;
+        color: #666666 !important;
         opacity: 1 !important;
     }}
     
@@ -255,94 +198,75 @@ def inject_custom_style():
     .stChatInput textarea:active,
     .stChatInput textarea:focus-visible,
     .stChatInput textarea:focus-within {{
-        background-color: rgba(255, 255, 255, 1.0) !important;
-        border: 2px solid rgba(0, 200, 83, 0.9) !important;
-        border-color: rgba(0, 200, 83, 0.9) !important;
-        box-shadow: 0 0 12px rgba(0, 200, 83, 0.3) !important;
+        background-color: #ffffff !important;
+        border: 2px solid #00c853 !important;
+        border-color: #00c853 !important;
+        box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2) !important;
         outline: none !important;
         outline-color: transparent !important;
     }}
 
-    /* Kill ALL red/orange Streamlit focus rings on chat input */
     div[data-testid=\"stChatInput\"] *,
     div[data-testid=\"stChatInputContainer\"] * {{
         outline: none !important;
         outline-color: transparent !important;
     }}
-    
-    div[data-testid=\"stChatInput\"],
-    div[data-testid=\"stChatInput\"] > div,
-    div[data-testid=\"stChatInputContainer\"],
-    div[data-testid=\"stChatInputContainer\"] > div {{
-        border-color: rgba(0, 200, 83, 0.6) !important;
-        outline: none !important;
-    }}
-    
-    div[data-testid=\"stChatInput\"]:focus-within,
-    div[data-testid=\"stChatInputContainer\"]:focus-within {{
-        border-color: rgba(0, 200, 83, 0.9) !important;
-        box-shadow: 0 0 12px rgba(0, 200, 83, 0.3) !important;
-        outline: none !important;
-    }}
-
-    /* Override Streamlit's default red/orange bottom border on chat input container */
-    .stChatInput > div {{
-        border-color: rgba(0, 200, 83, 0.6) !important;
-        outline: none !important;
-    }}
-    
-    .stChatInput > div:focus-within {{
-        border-color: rgba(0, 200, 83, 0.9) !important;
-        box-shadow: 0 0 12px rgba(0, 200, 83, 0.3) !important;
-    }}
 
     /* =========================================
-       CHAT MESSAGE STYLING
+       CHAT MESSAGE STYLING (Solid Light Mode)
        ========================================= */
     [data-testid="stChatMessage"] {{
-        background-color: rgba(0, 0, 0, 0.7) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 15px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
         padding: 1.5rem !important;
         margin-bottom: 1rem !important;
-        backdrop-filter: blur(10px) !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
+    }}
+    
+    [data-testid="stChatMessage"] * {{
+        color: #111111 !important;
     }}
     
     [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] p {{
         font-size: 1.05rem !important;
         line-height: 1.6 !important;
+        color: #111111 !important;
     }}
 
     /* =========================================
-       LOGIN PAGE STYLING (Dark Glassmorphism)
+       LOGIN PAGE STYLING (Solid Light Mode)
        ========================================= */
     [data-testid="stForm"] {{
-        background-color: rgba(0, 0, 0, 0.6) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 20px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 16px !important;
         padding: 3rem 2rem !important;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
-        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    }}
+    
+    [data-testid="stForm"] * {{
+        color: #111111 !important;
     }}
     
     [data-testid="stForm"] input {{
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        color: white !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background-color: #f8f9fa !important;
+        color: #111111 !important;
+        border: 1px solid #cccccc !important;
     }}
     
     [data-testid="stForm"] button {{
-        background-color: #ffffff !important;
-        color: black !important;
+        background-color: #2563eb !important;
+        color: white !important;
         font-weight: bold !important;
         border: none !important;
         transition: all 0.3s ease !important;
     }}
     
     [data-testid="stForm"] button:hover {{
+        background-color: #1d4ed8 !important;
         transform: scale(1.02) !important;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3) !important;
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3) !important;
     }}
 
     /* =========================================
@@ -475,8 +399,8 @@ with main_container:
     if not st.session_state.messages:
         st.markdown("""
             <div style="text-align: center; margin-bottom: 3rem; margin-top: 5rem;">
-                <h1 style="font-size: 4rem; font-weight: 800; background: -webkit-linear-gradient(#00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI Powered Smart Education System</h1>
-                <p style="font-size: 1.2rem; color: #888;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
+                <h1 style="font-size: 4rem; font-weight: 900; color: #0f172a;">AI Powered Smart Education System</h1>
+                <p style="font-size: 1.2rem; color: #475569;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -492,8 +416,8 @@ with main_container:
         if isinstance(content, dict):
             # 1. Article
             st.markdown("""
-            <div style="background: linear-gradient(90deg, rgba(0, 242, 254, 0.2) 0%, transparent 100%); border-left: 5px solid #00f2fe; padding: 10px 15px; margin: 20px 0; border-radius: 4px;">
-                <h3 style="margin: 0; color: #00f2fe; text-shadow: 0 0 10px rgba(0,242,254,0.5);">📚 Course Material</h3>
+            <div style="background: #f1f5f9; border-left: 5px solid #0ea5e9; padding: 10px 15px; margin: 20px 0; border-radius: 4px;">
+                <h3 style="margin: 0; color: #0369a1; font-weight: bold;">📚 Course Material</h3>
             </div>
             """, unsafe_allow_html=True)
             st.markdown(content.get('article', ''))
@@ -502,8 +426,8 @@ with main_container:
             flashcards = content.get('flashcards')
             if flashcards and 'flashcards' in flashcards:
                 st.markdown("""
-                <div style="background: linear-gradient(90deg, rgba(168, 85, 247, 0.2) 0%, transparent 100%); border-left: 5px solid #A855F7; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #d8b4fe; text-shadow: 0 0 10px rgba(168,85,247,0.5);">🎴 Concept Flashcards</h3>
+                <div style="background: #f3e8ff; border-left: 5px solid #a855f7; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
+                    <h3 style="margin: 0; color: #7e22ce; font-weight: bold;">🎴 Concept Flashcards</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 # Create a horizontal scroll or grid for flashcards
@@ -511,9 +435,9 @@ with main_container:
                 for idx, fc in enumerate(flashcards['flashcards']):
                     with cols[idx % 3]:
                         st.markdown(f"""
-                        <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 15px; background: rgba(255,255,255,0.05); margin-bottom: 10px;">
-                            <h4 style="margin-top:0; color: #A855F7;">{fc['concept']}</h4>
-                            <p style="font-size: 0.9rem;">{fc['description']}</p>
+                        <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #ffffff; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <h4 style="margin-top:0; color: #6d28d9;">{fc['concept']}</h4>
+                            <p style="font-size: 0.9rem; color: #333333;">{fc['description']}</p>
                         </div>
                         """, unsafe_allow_html=True)
                         
@@ -525,20 +449,24 @@ with main_container:
             quiz = content.get('quiz')
             if quiz and 'questions' in quiz:
                 st.markdown("""
-                <div style="background: linear-gradient(90deg, rgba(236, 72, 153, 0.2) 0%, transparent 100%); border-left: 5px solid #EC4899; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #fbcfe8; text-shadow: 0 0 10px rgba(236,72,153,0.5);">🧠 Knowledge Check</h3>
+                <div style="background: #fce7f3; border-left: 5px solid #ec4899; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
+                    <h3 style="margin: 0; color: #be185d; font-weight: bold;">🧠 Knowledge Check</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 st.markdown("""
                 <style>
                 .quiz-card {
-                    background: linear-gradient(145deg, rgba(30,40,60,0.5), rgba(15,20,30,0.8));
-                    border: 1px solid rgba(0, 255, 204, 0.2);
-                    border-left: 4px solid #00f2fe;
+                    background: #ffffff;
+                    border: 1px solid #e2e8f0;
+                    border-left: 4px solid #2563eb;
                     border-radius: 12px;
                     padding: 20px;
                     margin-bottom: 20px;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                    color: #111111;
+                }
+                .quiz-card p, .quiz-card label {
+                    color: #111111 !important;
                 }
                 </style>
                 """, unsafe_allow_html=True)
