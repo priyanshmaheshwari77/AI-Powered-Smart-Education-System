@@ -82,9 +82,6 @@ def render_auth_page():
     col1, col2, col3 = st.columns([1, 1.5, 1])
     
     with col2:
-        # Glassmorphic Container Start
-        st.markdown('<div class="glass-card" style="padding-top: 1rem;">', unsafe_allow_html=True)
-        
         # Auth Mode Switcher (Tabs)
         tabs = st.tabs(["Login", "Sign Up", "Recovery"])
         
@@ -96,5 +93,3 @@ def render_auth_page():
             
         with tabs[2]:
             render_forgot_password()
-            
-        st.markdown('</div>', unsafe_allow_html=True)
