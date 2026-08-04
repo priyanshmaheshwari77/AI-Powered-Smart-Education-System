@@ -235,21 +235,27 @@ def inject_custom_style():
     }}
     
     .stChatInput textarea {{
-        background-color: rgba(15, 20, 30, 0.95) !important;
-        color: #eeeeee !important;
-        caret-color: #ffffff !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        color: #111111 !important;
+        caret-color: #111111 !important;
         border: 2px solid rgba(0, 200, 83, 0.6) !important;
         border-radius: 24px !important;
         padding: 14px 20px !important;
         box-shadow: 0 0 8px rgba(0, 200, 83, 0.15) !important;
         outline: none !important;
+        font-weight: 500 !important;
+    }}
+    
+    .stChatInput textarea::placeholder {{
+        color: #555555 !important;
+        opacity: 1 !important;
     }}
     
     .stChatInput textarea:focus,
     .stChatInput textarea:active,
     .stChatInput textarea:focus-visible,
     .stChatInput textarea:focus-within {{
-        background-color: rgba(15, 20, 30, 1.0) !important;
+        background-color: rgba(255, 255, 255, 1.0) !important;
         border: 2px solid rgba(0, 200, 83, 0.9) !important;
         border-color: rgba(0, 200, 83, 0.9) !important;
         box-shadow: 0 0 12px rgba(0, 200, 83, 0.3) !important;
