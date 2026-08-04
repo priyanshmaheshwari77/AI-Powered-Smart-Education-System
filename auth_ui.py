@@ -5,34 +5,36 @@ import auth
 def render_custom_css():
     st.markdown("""
         <style>
-            /* Auth Card Styling */
-            div[data-testid="stVerticalBlock"] > div.element-container > div.stMarkdown > div[data-testid="stMarkdownContainer"] > div.auth-card {
-                background: rgba(30, 30, 30, 0.95);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+            /* The Auth Card is now handled by the Light Mode global css */
+            .glass-card {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
                 border-radius: 16px;
-                padding: 3rem;
-                box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+                padding: 2rem;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.05);
                 text-align: center;
-                animation: fadeIn 0.5s ease-in-out;
+                animation: fadeIn 0.4s ease-in-out;
             }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
+            .glass-card * {
+                color: #111111 !important;
             }
-            
-            /* Enhanced Input Fields */
             .stTextInput input {
-                background-color: #1a1a1a !important;
-                border: 1px solid #333 !important;
-                color: white !important;
+                background-color: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #111111 !important;
                 border-radius: 8px;
                 padding: 10px;
+                font-weight: 500 !important;
             }
             
             .stTextInput input:focus {
-                border-color: #3b82f6 !important;
-                box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
+                border-color: #2563eb !important;
+                box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
             }
         </style>
     """, unsafe_allow_html=True)
