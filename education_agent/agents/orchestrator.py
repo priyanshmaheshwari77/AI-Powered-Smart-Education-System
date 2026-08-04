@@ -9,15 +9,15 @@ load_dotenv()
 
 MODEL_NAME = "llama-3.1-8b-instant"
 
-SINGLE_PROMPT = """You are an expert educator. Produce highly accurate educational content for the topic: {topic}.
+SINGLE_PROMPT = """You are an expert educator. Produce highly accurate and extremely concise educational content for the topic: {topic}.
 
 Return ONLY valid JSON (no markdown wrapping) matching exactly this format:
-{{"article": "A highly informative 2 paragraph summary of the topic.",
- "flashcards": {{"flashcards": [{{"concept": "Key Term 1", "description": "Definition"}}, {{"concept": "Key Term 2", "description": "Definition"}}]}},
+{{"article": "An extremely brief 3-4 sentence summary of the topic.",
+ "flashcards": {{"flashcards": [{{"concept": "Key Term 1", "description": "A very brief 1-sentence definition"}}, {{"concept": "Key Term 2", "description": "A very brief 1-sentence definition"}}]}},
  "quiz": {{"questions": [
-     {{"question": "A specific question about the topic?", "options": ["Real Option 1", "Real Option 2", "Real Option 3", "Real Option 4"], "correct_answer": "Real Option 2", "explanation": "Why Option 2 is correct"}},
-     {{"question": "Another specific question?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option C", "explanation": "Why Option C is correct"}},
-     {{"question": "A third question?", "options": ["Choice 1", "Choice 2", "Choice 3", "Choice 4"], "correct_answer": "Choice 1", "explanation": "Why Choice 1 is correct"}}
+     {{"question": "A specific question about the topic?", "options": ["Real Option 1", "Real Option 2", "Real Option 3", "Real Option 4"], "correct_answer": "Real Option 2", "explanation": "1 short sentence explaining why Option 2 is correct"}},
+     {{"question": "Another specific question?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option C", "explanation": "1 short sentence explaining why Option C is correct"}},
+     {{"question": "A third question?", "options": ["Choice 1", "Choice 2", "Choice 3", "Choice 4"], "correct_answer": "Choice 1", "explanation": "1 short sentence explaining why Choice 1 is correct"}}
  ]}}
 }}"""
 

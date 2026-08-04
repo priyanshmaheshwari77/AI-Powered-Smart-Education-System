@@ -20,7 +20,7 @@ def get_orchestrator():
 
 # --- Page Config ---
 st.set_page_config(
-    page_title="EduVision AI",
+    page_title="AI Powered Smart Education System",
     page_icon="🔮",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -391,7 +391,7 @@ if LIMIT_REACHED or st.session_state.force_login:
 # --- Sidebar ---
 with st.sidebar:
     st.markdown("<h2 style='text-align: center;'>🔮</h2>", unsafe_allow_html=True)
-    st.markdown("<h3 style='text-align: center; margin-top: -20px;'>EduVision AI</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; margin-top: -20px;'>AI Powered Smart Education System</h3>", unsafe_allow_html=True)
     st.markdown("---")
     
     # New Chat Button
@@ -468,8 +468,8 @@ with main_container:
     if not st.session_state.messages:
         st.markdown("""
             <div style="text-align: center; margin-bottom: 3rem; margin-top: 5rem;">
-                <h1 style="font-size: 3.5rem; font-weight: 800; background: -webkit-linear-gradient(#fff, #999); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></h1>
-                <p style="font-size: 1.2rem; color: #888;"></p>
+                <h1 style="font-size: 4rem; font-weight: 800; background: -webkit-linear-gradient(#00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI Powered Smart Education System</h1>
+                <p style="font-size: 1.2rem; color: #888;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
             </div>
         """, unsafe_allow_html=True)
 

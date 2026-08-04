@@ -1,5 +1,5 @@
 ---
-title: EduVision AI
+title: AI Powered Smart Education System
 emoji: 🔮
 colorFrom: purple
 colorTo: indigo
@@ -8,9 +8,9 @@ app_file: app.py
 pinned: false
 ---
 
-# 🔮 EduVision AI: Advanced Multi-Agent Multimodal Education System
+# 🔮 AI Powered Smart Education System: Advanced Multi-Agent Multimodal Education System
 
-**EduVision AI** is a state-of-the-art educational platform built with **Agentic AI** principles. It uses a swarm of specialized agents to research, write, visualize, and assess any topic in real-time.
+**AI Powered Smart Education System** is a state-of-the-art educational platform built with **Agentic AI** principles. It uses a swarm of specialized agents to research, write, visualize, and assess any topic in real-time.
 
 ![EduVision Banner](https://img.shields.io/badge/Agentic%20AI-Multimodal-purple?style=for-the-badge)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
