@@ -235,7 +235,7 @@ def inject_custom_style():
     }}
     
     .stChatInput textarea {{
-        background-color: transparent !important;
+        background-color: rgba(15, 20, 30, 0.95) !important;
         color: #eeeeee !important;
         caret-color: #ffffff !important;
         border: 2px solid rgba(0, 200, 83, 0.6) !important;
@@ -249,6 +249,7 @@ def inject_custom_style():
     .stChatInput textarea:active,
     .stChatInput textarea:focus-visible,
     .stChatInput textarea:focus-within {{
+        background-color: rgba(15, 20, 30, 1.0) !important;
         border: 2px solid rgba(0, 200, 83, 0.9) !important;
         border-color: rgba(0, 200, 83, 0.9) !important;
         box-shadow: 0 0 12px rgba(0, 200, 83, 0.3) !important;
