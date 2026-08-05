@@ -87,40 +87,36 @@ def inject_custom_style():
     }}
     .viewerBadge_container__1QSob {{display: none !important;}}
 
-    /* FORCE VISIBILITY OF SIDEBAR TOGGLE - Natural Position */
+    /* PERMANENTLY BRIGHTEN ALL HEADER ICONS (Sidebar Toggle, etc) */
+    header[data-testid="stHeader"] button,
+    button[kind="header"],
     [data-testid="stSidebarCollapsedControl"],
     [data-testid="collapsedControl"] {{
-        display: flex !important;
+        opacity: 1 !important;
         visibility: visible !important;
-        z-index: 1000000 !important;
         color: #ffffff !important;
-        background-color: #1e293b !important;
-        width: 56px !important;
-        height: 56px !important;
-        border-radius: 14px !important;
-        border: 1px solid #334155 !important;
-        transition: all 0.3s ease !important;
-        cursor: pointer !important;
-        pointer-events: auto !important;
-        margin-top: 15px !important; 
-        margin-left: 15px !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+        background-color: transparent !important;
     }}
     
-    [data-testid="stSidebarCollapsedControl"]:hover,
-    [data-testid="collapsedControl"]:hover {{
-        background-color: #334155 !important;
-        border-color: #475569 !important;
-        transform: scale(1.08) !important;
-    }}
-    
-    /* Ensure the icon inside is visible */
+    header[data-testid="stHeader"] button svg,
+    button[kind="header"] svg,
     [data-testid="stSidebarCollapsedControl"] svg,
     [data-testid="collapsedControl"] svg {{
         fill: #ffffff !important;
         stroke: #ffffff !important;
+        opacity: 1 !important;
         width: 32px !important;
         height: 32px !important;
+    }}
+
+    /* NORMAL SIDEBAR TOGGLE HOVER */
+    [data-testid="stSidebarCollapsedControl"]:hover,
+    [data-testid="collapsedControl"]:hover,
+    button[kind="header"]:hover {{
+        background-color: #334155 !important;
+        border-color: #475569 !important;
+        transform: scale(1.08) !important;
+        border-radius: 8px !important;
     }}
 
     /* =========================================
