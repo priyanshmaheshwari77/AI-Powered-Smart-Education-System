@@ -763,8 +763,10 @@ def inject_keyboard_navigation():
         <div class="row"><span class="action">Show/hide help</span><kbd>?</kbd></div>
     </div>
     
-    <span id="main-content"></span>
-    
+    </span>
+    """, unsafe_allow_html=True)
+
+    js_code = """
     <script>
     (function() {
         // Remove Streamlit's built-in focus-hiding behaviors manually
@@ -931,10 +933,20 @@ def inject_keyboard_navigation():
                                  document.querySelector('button[kind="header"]');
                 if (sidebarBtn) { sidebarBtn.click(); }
             }
-        }, true); // Use capture phase to intercept before Streamlit
+        }, true);
     })();
     </script>
-    """, unsafe_allow_html=True)
+    """
+    
+    # Bypass DOMPurify by injecting as an iframe components block and prefixing all DOM calls with window.parent
+    js_code = js_code.replace("document.", "window.parent.document.")
+    js_code = js_code.replace("window.", "window.parent.")
+    # Fix the edge cases created by replace
+    js_code = js_code.replace("window.parent.parent.document", "window.parent.document")
+    js_code = js_code.replace("view: window.parent", "view: window.parent")
+    
+    import streamlit.components.v1 as components
+    components.html(js_code, height=0)
 
 inject_keyboard_navigation()
 
