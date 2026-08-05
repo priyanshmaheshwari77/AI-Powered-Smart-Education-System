@@ -769,40 +769,55 @@ def inject_keyboard_navigation():
     js_code = """
     <script>
     (function() {
-        // Remove Streamlit's built-in focus-hiding behaviors manually
         document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
         
-        // AGGRESSIVE LAYOUT OVERRIDES (Runs continuously to bypass strict browser caching and Streamlit React states)
+        // Memory states for Focus persistence across Streamlit re-renders
+        window.parent.__eduvision_focus = window.parent.__eduvision_focus || { type: null, text: null, label: null };
+        function saveFoc(el) {
+            if (!el || el.tagName === 'BODY') return;
+            window.parent.__eduvision_focus = {
+                type: el.tagName,
+                text: el.innerText ? el.innerText.trim() : null,
+                label: el.getAttribute('aria-label') || el.name || null
+            };
+        }
+        
+        // AGGRESSIVE LAYOUT & FOCUS ENGINE
         setInterval(function() {
-            // Force Tab Centering
-            var tabLists = document.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]');
-            tabLists.forEach(function(list) {
-                list.style.setProperty("justify-content", "center", "important");
-                list.style.setProperty("display", "flex", "important");
-                list.style.setProperty("width", "100%", "important");
-                list.style.setProperty("border-bottom", "none", "important");
-            });
+            var doc = window.parent.document;
+            var active = doc.activeElement;
             
-            // Annihilate Streamlit red/grey tab lines
-            var artifacts = document.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]');
-            artifacts.forEach(function(el) {
-                el.style.setProperty("display", "none", "important");
-                el.style.setProperty("height", "0px", "important");
-                el.style.setProperty("opacity", "0", "important");
-            });
-            
-            // Tab-index enforcer
-            var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div');
-            clickables.forEach(function(el) {
-                if (el.disabled) return;
-                if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') {
-                    el.setAttribute('tabindex', '0');
+            // Focus Persistence
+            if (!active || active.tagName === 'BODY') {
+                var mem = window.parent.__eduvision_focus;
+                if (mem.type) {
+                    var el = Array.from(doc.querySelectorAll(mem.type)).find(e => 
+                        (mem.label && (e.getAttribute('aria-label') === mem.label || e.name === mem.label)) ||
+                        (mem.text && e.innerText && e.innerText.trim() === mem.text)
+                    );
+                    if (el) el.focus();
                 }
+            } else { saveFoc(active); }
+            
+            // Override Tabs
+            doc.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]').forEach(l => {
+                l.style.setProperty("justify-content", "center", "important");
+                l.style.setProperty("display", "flex", "important");
+                l.style.setProperty("width", "100%", "important");
+                l.style.setProperty("border-bottom", "none", "important");
+            });
+            doc.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]').forEach(el => {
+                el.style.setProperty("display", "none", "important");
+            });
+            
+            // Ensure focusability
+            doc.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"]').forEach(el => {
+                if (el.disabled || window.parent.getComputedStyle(el).display === 'none') return;
+                if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') el.setAttribute('tabindex', '0');
             });
         }, 300);
         
-        // Global keyboard shortcuts (Capture Phase to override Streamlit BaseWeb navigation locking)
-        document.addEventListener('keydown', function(e) {
+        window.parent.document.addEventListener('keydown', function(e) {
             var active = document.activeElement;
             var tag = (active && active.tagName) ? active.tagName.toLowerCase() : '';
             var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox' && active.type !== 'range') || tag === 'textarea' || (active && active.isContentEditable);
