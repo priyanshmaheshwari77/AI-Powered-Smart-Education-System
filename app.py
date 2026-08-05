@@ -769,9 +769,9 @@ def inject_keyboard_navigation():
     js_code = """
     <script>
     (function() {
-        document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
+        var pDoc = window.parent.document;
+        pDoc.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
         
-        // Memory states for Focus persistence across Streamlit re-renders
         window.parent.__eduvision_focus = window.parent.__eduvision_focus || { type: null, text: null, label: null };
         function saveFoc(el) {
             if (!el || el.tagName === 'BODY') return;
@@ -782,16 +782,13 @@ def inject_keyboard_navigation():
             };
         }
         
-        // AGGRESSIVE LAYOUT & FOCUS ENGINE
         setInterval(function() {
-            var doc = window.parent.document;
-            var active = doc.activeElement;
+            var active = pDoc.activeElement;
             
-            // Focus Persistence
             if (!active || active.tagName === 'BODY') {
                 var mem = window.parent.__eduvision_focus;
                 if (mem.type) {
-                    var el = Array.from(doc.querySelectorAll(mem.type)).find(e => 
+                    var el = Array.from(pDoc.querySelectorAll(mem.type)).find(e => 
                         (mem.label && (e.getAttribute('aria-label') === mem.label || e.name === mem.label)) ||
                         (mem.text && e.innerText && e.innerText.trim() === mem.text)
                     );
@@ -799,26 +796,24 @@ def inject_keyboard_navigation():
                 }
             } else { saveFoc(active); }
             
-            // Override Tabs
-            doc.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]').forEach(l => {
+            pDoc.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]').forEach(l => {
                 l.style.setProperty("justify-content", "center", "important");
                 l.style.setProperty("display", "flex", "important");
                 l.style.setProperty("width", "100%", "important");
                 l.style.setProperty("border-bottom", "none", "important");
             });
-            doc.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]').forEach(el => {
+            pDoc.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]').forEach(el => {
                 el.style.setProperty("display", "none", "important");
             });
             
-            // Ensure focusability
-            doc.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"]').forEach(el => {
+            pDoc.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"]').forEach(el => {
                 if (el.disabled || window.parent.getComputedStyle(el).display === 'none') return;
                 if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') el.setAttribute('tabindex', '0');
             });
         }, 300);
         
-        window.parent.document.addEventListener('keydown', function(e) {
-            var active = document.activeElement;
+        pDoc.addEventListener('keydown', function(e) {
+            var active = pDoc.activeElement;
             var tag = (active && active.tagName) ? active.tagName.toLowerCase() : '';
             var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox' && active.type !== 'range') || tag === 'textarea' || (active && active.isContentEditable);
             
@@ -844,7 +839,7 @@ def inject_keyboard_navigation():
             var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
             
             var getClickables = function() {
-                return Array.from(document.querySelectorAll('button, input, textarea, select, [role="tab"], [role="radio"]'))
+                return Array.from(pDoc.querySelectorAll('button, input, textarea, select, [role="tab"], [role="radio"]'))
                             .filter(el => {
                                 if (el.disabled || el.tabIndex < 0 || el.offsetParent === null) return false;
                                 var label = (el.getAttribute('aria-label') || el.title || '').toLowerCase();
@@ -911,27 +906,21 @@ def inject_keyboard_navigation():
             // "/" — Focus the chat input (only if not already typing)
             if (e.key === '/' && !isTextInput) {
                 e.preventDefault();
-                var chatInput = document.querySelector('.stChatInput textarea');
-                if (chatInput) { chatInput.focus(); }
+                var chatInput = pDoc.querySelector('.stChatInput textarea');
+                if (chatInput) { chatInput.focus(); saveFoc(chatInput); }
             }
-            
-            // "?" — Toggle keyboard help (only if not already typing)
             if (e.key === '?' && !isTextInput) {
-                var help = document.getElementById('kbdHelp');
+                var help = pDoc.getElementById('kbdHelp');
                 if (help) { help.classList.toggle('visible'); }
             }
-            
-            // "Escape" — Blur current element & close help
             if (e.key === 'Escape') {
-                document.activeElement.blur();
-                var help = document.getElementById('kbdHelp');
+                if (active) active.blur();
+                var help = pDoc.getElementById('kbdHelp');
                 if (help) { help.classList.remove('visible'); }
             }
-            
-            // "Alt+N" — Click the New Chat button
             if (e.altKey && e.key.toLowerCase() === 'n') {
                 e.preventDefault();
-                var buttons = document.querySelectorAll('button');
+                var buttons = pDoc.querySelectorAll('button');
                 for (var i = 0; i < buttons.length; i++) {
                     if (buttons[i].textContent.trim().toUpperCase().includes('NEW CHAT')) {
                         buttons[i].click();
@@ -939,26 +928,17 @@ def inject_keyboard_navigation():
                     }
                 }
             }
-            
-            // "Alt+S" — Toggle sidebar
             if (e.altKey && e.key.toLowerCase() === 's') {
                 e.preventDefault();
-                var sidebarBtn = document.querySelector('[data-testid="stSidebarCollapsedControl"] button') ||
-                                 document.querySelector('[data-testid="collapsedControl"] button') ||
-                                 document.querySelector('button[kind="header"]');
+                var sidebarBtn = pDoc.querySelector('[data-testid="stSidebarCollapsedControl"] button') ||
+                                 pDoc.querySelector('[data-testid="collapsedControl"] button') ||
+                                 pDoc.querySelector('button[kind="header"]');
                 if (sidebarBtn) { sidebarBtn.click(); }
             }
         }, true);
     })();
     </script>
     """
-    
-    # Bypass DOMPurify by injecting as an iframe components block and prefixing all DOM calls with window.parent
-    js_code = js_code.replace("document.", "window.parent.document.")
-    js_code = js_code.replace("window.", "window.parent.")
-    # Fix the edge cases created by replace
-    js_code = js_code.replace("window.parent.parent.document", "window.parent.document")
-    js_code = js_code.replace("view: window.parent", "view: window.parent")
     
     import streamlit.components.v1 as components
     components.html(js_code, height=0)
