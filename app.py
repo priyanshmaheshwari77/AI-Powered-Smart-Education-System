@@ -177,13 +177,14 @@ def inject_custom_style():
         max-width: 1100px;
     }}
 
-    /* 5. Sidebar Styling */
+    /* 5. Sidebar Styling (Acrylic Glassmorphism) */
     section[data-testid="stSidebar"] {{
-        background-color: #020617 !important; 
-        background: #020617 !important;
-        border-right: 1px solid #1e293b !important;
+        background-color: rgba(2, 6, 23, 0.75) !important; 
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
         z-index: 99999 !important;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.5) !important;
+        box-shadow: 4px 0 25px rgba(0,0,0,0.6) !important;
     }}
 
     section[data-testid="stSidebar"] > div {{
@@ -503,6 +504,30 @@ def inject_custom_style():
         border: 2px solid #3b82f6 !important;
         box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6) !important;
         background-color: transparent !important;
+    }}
+
+    /* =========================================
+       PREMIUM CUSTOM SCROLLBARS
+       ========================================= */
+    ::-webkit-scrollbar {{
+        width: 8px !important;
+        height: 8px !important;
+    }}
+    ::-webkit-scrollbar-track {{
+        background: rgba(15, 23, 42, 0.5) !important; 
+        border-radius: 4px !important;
+    }}
+    ::-webkit-scrollbar-thumb {{
+        background: #3b82f6 !important; 
+        border-radius: 4px !important;
+    }}
+    ::-webkit-scrollbar-thumb:hover {{
+        background: #60a5fa !important; 
+    }}
+    
+    * {{
+        scrollbar-width: thin !important;
+        scrollbar-color: #3b82f6 rgba(15, 23, 42, 0.5) !important;
     }}
 
     /* GLOBAL MARKDOWN BRIGHTNESS */
@@ -886,10 +911,28 @@ main_container = st.container()
 with main_container:
     # Header (Only show if no content generated yet)
     if not st.session_state.messages:
+        # --- 2. Title Section (Premium Animated Header) ---
         st.markdown("""
-            <div style="text-align: center; margin-bottom: 3rem; margin-top: 5rem;">
-                <h1 style="font-size: 4rem; font-weight: 900; color: #ffffff;">AI Powered Smart Education System</h1>
-                <p style="font-size: 1.2rem; color: #94a3b8;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
+            <style>
+            @keyframes subtlePulse {
+                0% { text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); opacity: 0.95; }
+                50% { text-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 10px rgba(59,130,246,0.5); opacity: 1; }
+                100% { text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); opacity: 0.95; }
+            }
+            .premium-title {
+                font-size: 4rem; 
+                font-weight: 900; 
+                color: #ffffff;
+                animation: subtlePulse 4s infinite ease-in-out;
+                letter-spacing: -1px;
+                background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            </style>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 class="premium-title">AI Powered Smart Education System</h1>
+                <p style="font-size: 1.25rem; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
             </div>
         """, unsafe_allow_html=True)
 
