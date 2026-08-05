@@ -390,10 +390,37 @@ def inject_custom_style():
     /* FIX GLOBAL INPUT FOCUS STATES (Green) */
     div[data-baseweb="input"]:focus-within,
     div[data-baseweb="base-input"]:focus-within {{
-        border-color: #3b82f6 !important;
-        box-shadow: 0 0 12px 1px rgba(59, 130, 246, 0.7) !important;
+        border-color: #22c55e !important;
+        box-shadow: 0 0 12px 1px rgba(34, 197, 94, 0.7) !important;
     }}
     
+    /* KILL ALL DEFAULT RED BORDERS ON INPUTS */
+    div[data-baseweb="input"],
+    div[data-baseweb="base-input"] {{
+        border-color: #475569 !important;
+    }}
+    
+    div[data-baseweb="input"]:hover,
+    div[data-baseweb="base-input"]:hover {{
+        border-color: #22c55e !important;
+    }}
+    
+    /* Override Streamlit red error/active borders on all input types */
+    .stTextInput > div > div,
+    .stPasswordInput > div > div,
+    .stEmailInput > div > div,
+    .stNumberInput > div > div {{
+        border-color: #475569 !important;
+    }}
+    
+    .stTextInput > div > div:focus-within,
+    .stPasswordInput > div > div:focus-within,
+    .stEmailInput > div > div:focus-within,
+    .stNumberInput > div > div:focus-within {{
+        border-color: #22c55e !important;
+        box-shadow: 0 0 12px 1px rgba(34, 197, 94, 0.7) !important;
+    }}
+
     /* ANNIHILATE ALL BORDERS ON UNDERLYING TEXT INPUT ELEMENTS NATIVELY */
     .stTextInput input, .stTextInput textarea, .stPasswordInput input, [data-baseweb="base-input"] input,
     .stChatInput button, .stChatInput svg, button[kind="secondary"] {{
