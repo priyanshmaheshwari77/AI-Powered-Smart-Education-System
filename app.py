@@ -365,6 +365,17 @@ def inject_custom_style():
         box-shadow: 0 0 0 1px #22c55e !important;
     }}
     
+    /* ABSOLUTE GREEN INJECTION FOR EVERY SINGLE INPUT IN THE PROJECT */
+    input:focus, textarea:focus, 
+    [data-baseweb="input"]:focus-within, [data-baseweb="base-input"]:focus-within,
+    .stTextInput:focus-within, .stChatInput:focus-within,
+    div[data-testid="stTextInput"] *:focus,
+    div[data-testid="stChatInput"] *:focus {{
+        border-color: #22c55e !important;
+        outline-color: #22c55e !important;
+        box-shadow: 0 0 0 1px #22c55e !important;
+    }}
+    
     /* GLOBAL MARKDOWN BRIGHTNESS */
     [data-testid="stMarkdownContainer"] * {{
         color: #ffffff !important;
