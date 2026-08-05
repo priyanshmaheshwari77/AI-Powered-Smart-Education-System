@@ -376,6 +376,23 @@ def inject_custom_style():
         box-shadow: 0 0 0 1px #22c55e !important;
     }}
     
+    
+    /* SUPER FITTED GREEN BOUNDARY - REMOVES ANY GAPS */
+    .stChatInput textarea {{
+        border: none !important; 
+        box-shadow: none !important;
+    }}
+    
+    .stChatInput {{
+        border-radius: 26px !important;
+    }}
+    
+    .stChatInput:focus-within {{
+        border: 2px solid #22c55e !important;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
+        background-color: transparent !important;
+    }}
+
     /* GLOBAL MARKDOWN BRIGHTNESS */
     [data-testid="stMarkdownContainer"] * {{
         color: #ffffff !important;
