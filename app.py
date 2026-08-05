@@ -550,6 +550,9 @@ def inject_custom_style():
         margin-bottom: 0px !important;
         overflow: visible !important;
         border: none !important;
+        justify-content: center !important;
+        display: flex !important;
+        width: 100% !important;
     }}
 
     button[data-baseweb="tab"] {{
