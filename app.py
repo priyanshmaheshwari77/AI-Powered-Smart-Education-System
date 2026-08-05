@@ -536,18 +536,42 @@ def inject_custom_style():
     }}
     
     /* FIX STREAMLIT TABS BRIGHTNESS & BORDERS */
+    div[data-testid="stTabs"] {{
+        overflow: visible !important;
+    }}
+    
+    div[data-baseweb="tab-list"] {{
+        border-bottom: none !important;
+        border-bottom-color: transparent !important;
+        margin-bottom: 0px !important;
+        overflow: visible !important;
+    }}
+
+    button[data-baseweb="tab"] {{
+        overflow: visible !important; 
+        margin: 0 4px !important;
+        border-bottom-color: transparent !important;
+    }}
+
     button[data-baseweb="tab"] * {{
         color: #e2e8f0 !important;
         font-weight: 600 !important;
         font-size: 1.1rem !important;
         opacity: 1 !important;
     }}
+    
+    button[data-baseweb="tab"][aria-selected="true"] {{
+        border-bottom-color: #3b82f6 !important;
+        border-bottom-width: 3px !important;
+    }}
+    
     button[data-baseweb="tab"][aria-selected="true"] * {{
         color: #60a5fa !important;
     }}
     
     [data-baseweb="tab-highlight"] {{
         background-color: #3b82f6 !important;
+        display: none !important;
     }}
     
     [data-baseweb="tab-border"] {{
@@ -814,18 +838,27 @@ def inject_keyboard_navigation():
                 
                 // Find exactly which element is focused, or default to -1
                 var currentIndex = clickables.indexOf(active);
+                var elementToFocus = null;
                 
                 if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
                     if (currentIndex > -1 && currentIndex < clickables.length - 1) {
-                        clickables[currentIndex + 1].focus();
+                        elementToFocus = clickables[currentIndex + 1];
                     } else if (clickables.length > 0) {
-                        clickables[0].focus(); // Wrap to beginning if lost
+                        elementToFocus = clickables[0]; // Wrap to beginning if lost
                     }
                 } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
                     if (currentIndex > 0) {
-                        clickables[currentIndex - 1].focus();
+                        elementToFocus = clickables[currentIndex - 1];
                     } else if (clickables.length > 0) {
-                        clickables[clickables.length - 1].focus(); // Wrap backwards
+                        elementToFocus = clickables[clickables.length - 1]; // Wrap backwards
+                    }
+                }
+                
+                if (elementToFocus) {
+                    elementToFocus.focus();
+                    // If moving into a Tab, execute click to trigger streamlits internal frame update
+                    if (elementToFocus.getAttribute('role') === 'tab' || elementToFocus.hasAttribute('data-baseweb')) {
+                        if (typeof elementToFocus.click === 'function') elementToFocus.click();
                     }
                 }
             }
