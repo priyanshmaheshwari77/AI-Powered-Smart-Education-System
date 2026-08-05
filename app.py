@@ -369,6 +369,21 @@ def inject_custom_style():
         box-shadow: 0 0 0 1px #22c55e !important;
     }}
     
+    /* ANNIHILATE ALL BORDERS ON UNDERLYING TEXT INPUT ELEMENTS NATIVELY */
+    .stTextInput input, .stTextInput textarea, .stPasswordInput input, [data-baseweb="base-input"] input {{
+        border: none !important;
+        border-color: transparent !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }}
+    
+    .stTextInput input:focus, .stTextInput textarea:focus, .stPasswordInput input:focus, [data-baseweb="base-input"] input:focus {{
+        border: none !important;
+        border-color: transparent !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }}
+
     /* PRECISION GREEN INJECTION FOR INNER INPUTS ONLY */
     div[data-baseweb="input"], div[data-baseweb="base-input"] {{
         background-color: #1e293b !important;
