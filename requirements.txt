@@ -4,6 +4,4 @@ langchain-groq
 python-dotenv
 duckduckgo-search
 requests
-upstash-vector
 bcrypt
-sentence-transformers
