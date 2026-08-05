@@ -47,8 +47,8 @@ def render_signup_form():
         if submitted:
             if not new_user or not new_pass or not new_email:
                 st.error("All fields are required.")
-            elif not re.match(r'^[A-Za-z]+$', new_user):
-                st.error("Username must only contain letters (no spaces, numbers, or special characters). - Invalid credentials information format.")
+            elif not re.match(r'^[A-Za-z\s]+$', new_user):
+                st.error("Username must be a string containing only letters (no numbers or special characters). - Invalid credentials information format.")
             elif not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', new_email):
                 st.error("Please enter a valid email format. - Invalid credentials information format.")
             elif not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', new_pass):
