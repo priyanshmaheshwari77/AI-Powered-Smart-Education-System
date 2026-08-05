@@ -538,19 +538,23 @@ def inject_custom_style():
     /* FIX STREAMLIT TABS BRIGHTNESS & BORDERS */
     div[data-testid="stTabs"] {{
         overflow: visible !important;
+        border: none !important;
+    }}
+    
+    div[data-testid="stTabs"] * {{
+        border-bottom: 0px solid transparent !important;
+        box-shadow: none !important;
     }}
     
     div[data-baseweb="tab-list"] {{
-        border-bottom: none !important;
-        border-bottom-color: transparent !important;
         margin-bottom: 0px !important;
         overflow: visible !important;
+        border: none !important;
     }}
 
     button[data-baseweb="tab"] {{
         overflow: visible !important; 
         margin: 0 4px !important;
-        border-bottom-color: transparent !important;
     }}
 
     button[data-baseweb="tab"] * {{
@@ -558,29 +562,23 @@ def inject_custom_style():
         font-weight: 600 !important;
         font-size: 1.1rem !important;
         opacity: 1 !important;
+        border: none !important;
     }}
     
     button[data-baseweb="tab"][aria-selected="true"] {{
-        border-bottom-color: #3b82f6 !important;
-        border-bottom-width: 3px !important;
+        border-bottom: 3px solid #3b82f6 !important;
     }}
     
     button[data-baseweb="tab"][aria-selected="true"] * {{
         color: #60a5fa !important;
     }}
     
-    [data-baseweb="tab-highlight"] {{
-        background-color: #3b82f6 !important;
-        display: none !important;
-    }}
-    
+    [data-baseweb="tab-highlight"], 
     [data-baseweb="tab-border"] {{
-        background-color: transparent !important;
         display: none !important;
-    }}
-    
-    div[role="tablist"] {{
-        border-bottom: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
     }}
     
     [data-testid="stForm"] button {{
