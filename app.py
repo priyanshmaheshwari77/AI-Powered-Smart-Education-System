@@ -247,6 +247,12 @@ def inject_custom_style():
         outline-color: transparent !important;
     }}
     
+    div[data-testid="stChatInputContainer"]:focus-within *,
+    div[data-testid="stChatInput"]:focus-within *,
+    .stChatInput:focus-within * {{
+        border-color: #22c55e !important;
+    }}
+    
 
 
     /* =========================================
