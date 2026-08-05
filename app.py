@@ -1,4 +1,13 @@
 import streamlit as st
+
+# --- Page Config MUST BE FIRST ---
+st.set_page_config(
+    page_title="AI Powered Smart Education System",
+    page_icon="🔮",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
 import streamlit.components.v1 as components
 import os
 import base64
@@ -18,13 +27,7 @@ load_dotenv()
 def get_orchestrator():
     return Orchestrator()
 
-# --- Page Config ---
-st.set_page_config(
-    page_title="AI Powered Smart Education System",
-    page_icon="",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+# Configuration moved to top of file
 
 # ================= PREMIUM BACKGROUND =================
 def get_base64_of_bin_file(bin_file):
