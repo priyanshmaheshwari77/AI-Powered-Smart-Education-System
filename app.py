@@ -769,11 +769,14 @@ def inject_keyboard_navigation():
     js_code = """
     <script>
     (function() {
-        if (window.parent.__eduvision_injected) return;
-        window.parent.__eduvision_injected = true;
-        
         var pDoc = window.parent.document;
-        pDoc.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
+        // Clean up artifacts from previous Streamlit renders
+        if (window.parent.__eduvision_interval) clearInterval(window.parent.__eduvision_interval);
+        if (window.parent.__eduvision_keydown) pDoc.removeEventListener('keydown', window.parent.__eduvision_keydown, true);
+        if (window.parent.__eduvision_mousedown) pDoc.body.removeEventListener('mousedown', window.parent.__eduvision_mousedown, true);
+        
+        window.parent.__eduvision_mousedown = function(e){ e.stopPropagation(); };
+        pDoc.body.addEventListener('mousedown', window.parent.__eduvision_mousedown, true);
         
         window.parent.__eduvision_focus = window.parent.__eduvision_focus || { type: null, text: null, label: null };
         function saveFoc(el) {
@@ -785,7 +788,7 @@ def inject_keyboard_navigation():
             };
         }
         
-        setInterval(function() {
+        window.parent.__eduvision_interval = setInterval(function() {
             var active = pDoc.activeElement;
             
             if (!active || active.tagName === 'BODY') {
@@ -815,7 +818,7 @@ def inject_keyboard_navigation():
             });
         }, 300);
         
-        pDoc.addEventListener('keydown', function(e) {
+        window.parent.__eduvision_keydown = function(e) {
             var active = pDoc.activeElement;
             var tag = (active && active.tagName) ? active.tagName.toLowerCase() : '';
             var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox' && active.type !== 'range') || tag === 'textarea' || (active && active.isContentEditable);
@@ -922,7 +925,9 @@ def inject_keyboard_navigation():
                                  pDoc.querySelector('button[kind="header"]');
                 if (sidebarBtn) { sidebarBtn.click(); }
             }
-        }, true);
+        };
+        
+        pDoc.addEventListener('keydown', window.parent.__eduvision_keydown, true);
     })();
     </script>
     """
