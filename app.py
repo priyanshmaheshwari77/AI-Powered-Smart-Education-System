@@ -145,7 +145,7 @@ def inject_custom_style():
        
     /* STREAMLIT PRIMARY THEME VARIABLE LOCK */
     :root, .stApp, section {{
-        --primary-color: #22c55e !important;
+        --primary-color: #3b82f6 !important;
     }}
 
     html, body {{
@@ -219,7 +219,7 @@ def inject_custom_style():
         background-color: #1e293b !important;
         color: #ffffff !important;
         caret-color: #ffffff !important;
-        border: 2px solid #22c55e !important;
+        border: 2px solid #3b82f6 !important;
         border-radius: 24px !important;
         padding: 16px 20px !important;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
@@ -238,9 +238,9 @@ def inject_custom_style():
     .stChatInput textarea:focus-visible,
     .stChatInput textarea:focus-within {{
         background-color: #0f172a !important;
-        border: 2px solid #22c55e !important;
-        border-color: #22c55e !important;
-        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
+        border: 2px solid #3b82f6 !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6) !important;
         outline: none !important;
         outline-color: transparent !important;
     }}
@@ -254,7 +254,7 @@ def inject_custom_style():
     div[data-testid="stChatInputContainer"]:focus-within *,
     div[data-testid="stChatInput"]:focus-within *,
     .stChatInput:focus-within * {{
-        border-color: #22c55e !important;
+        border-color: #3b82f6 !important;
     }}
     
 
@@ -378,8 +378,8 @@ def inject_custom_style():
     /* FIX GLOBAL INPUT FOCUS STATES (Green) */
     div[data-baseweb="input"]:focus-within,
     div[data-baseweb="base-input"]:focus-within {{
-        border-color: #22c55e !important;
-        box-shadow: 0 0 0 1px #22c55e !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 12px 1px rgba(59, 130, 246, 0.7) !important;
     }}
     
     /* ANNIHILATE ALL BORDERS ON UNDERLYING TEXT INPUT ELEMENTS NATIVELY */
@@ -402,24 +402,24 @@ def inject_custom_style():
         background-color: transparent !important;
     }}
     
-    /* ENFORCE GREEN ARROW SVG FILL INSTEAD OF NATIVE RED */
+    /* ENFORCE BLUE ARROW SVG FILL INSTEAD OF NATIVE RED */
     .stChatInput button:focus svg, [data-testid="stChatInputSubmitButton"]:focus svg, [data-testid="stChatInputSubmitButton"]:hover svg {{
-        fill: #22c55e !important;
-        stroke: #22c55e !important;
+        fill: #3b82f6 !important;
+        stroke: #3b82f6 !important;
     }}
 
-    /* CROSS-BROWSER NEXT-SIBLING GREEN TARGETING */
+    /* CROSS-BROWSER NEXT-SIBLING BLUE TARGETING */
     div[data-testid="stWidgetLabel"] + div, 
     div[data-testid="stChatInputContainer"] > div:first-child {{
         background-color: #1e293b !important;
-        border: 2px solid #22c55e !important;
+        border: 2px solid #3b82f6 !important;
         border-radius: 8px !important;
     }}
     
     div[data-testid="stWidgetLabel"] + div:focus-within, 
     div[data-testid="stChatInputContainer"] > div:first-child:focus-within {{
-        border-color: #22c55e !important;
-        box-shadow: 0 0 0 1px #22c55e !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 12px 1px rgba(59, 130, 246, 0.7) !important;
     }}
     
     div[data-baseweb="input"] input, div[data-baseweb="base-input"] input {{
@@ -432,14 +432,14 @@ def inject_custom_style():
     div[data-baseweb="input"]:focus-within, 
     div[data-baseweb="base-input"]:focus-within,
     .stChatInput:focus-within {{
-        border-color: #22c55e !important;
-        border: 2px solid #22c55e !important;
+        border-color: #3b82f6 !important;
+        border: 2px solid #3b82f6 !important;
         outline: none !important;
-        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6) !important;
     }}
     
     
-    /* SUPER FITTED GREEN BOUNDARY - REMOVES ANY GAPS */
+    /* SUPER FITTED BLUE BOUNDARY - REMOVES ANY GAPS */
     .stChatInput textarea {{
         border: none !important; 
         box-shadow: none !important;
@@ -450,8 +450,8 @@ def inject_custom_style():
     }}
     
     .stChatInput:focus-within {{
-        border: 2px solid #22c55e !important;
-        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
+        border: 2px solid #3b82f6 !important;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6) !important;
         background-color: transparent !important;
     }}
 
