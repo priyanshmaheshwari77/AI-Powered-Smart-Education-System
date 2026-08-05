@@ -78,11 +78,12 @@ def inject_custom_style():
     /* Hide specific deployment/github icons */
     .stDeployButton {{display: none;}}
     /* REMOVE ALL OTHER HEADER FEATURES (Fork, Deploy, Menu) */
-    [data-testid="stToolbar"],
     #MainMenu,
     header .stAppDeployButton,
     .stAppDeployButton,
-    .stDeployButton {{
+    .stDeployButton,
+    .viewerBadge_container__1QSob,
+    .stActionButton {{
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
