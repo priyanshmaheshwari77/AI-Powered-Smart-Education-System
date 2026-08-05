@@ -770,17 +770,34 @@ def inject_keyboard_navigation():
         // Remove Streamlit's built-in focus-hiding behaviors manually
         document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
         
-        // AGGRESSIVE TABINDEX ENFORCER: Ensure ALL buttons and inputs are focusable
+        // AGGRESSIVE LAYOUT OVERRIDES (Runs continuously to bypass strict browser caching and Streamlit React states)
         setInterval(function() {
+            // Force Tab Centering
+            var tabLists = document.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]');
+            tabLists.forEach(function(list) {
+                list.style.setProperty("justify-content", "center", "important");
+                list.style.setProperty("display", "flex", "important");
+                list.style.setProperty("width", "100%", "important");
+                list.style.setProperty("border-bottom", "none", "important");
+            });
+            
+            // Annihilate Streamlit red/grey tab lines
+            var artifacts = document.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]');
+            artifacts.forEach(function(el) {
+                el.style.setProperty("display", "none", "important");
+                el.style.setProperty("height", "0px", "important");
+                el.style.setProperty("opacity", "0", "important");
+            });
+            
+            // Tab-index enforcer
             var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div');
             clickables.forEach(function(el) {
-                // Ignore elements that specifically disable themselves
                 if (el.disabled) return;
                 if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') {
                     el.setAttribute('tabindex', '0');
                 }
             });
-        }, 1000);
+        }, 300);
         
         // Global keyboard shortcuts (Capture Phase to override Streamlit BaseWeb navigation locking)
         document.addEventListener('keydown', function(e) {
