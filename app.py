@@ -369,15 +369,27 @@ def inject_custom_style():
         box-shadow: 0 0 0 1px #22c55e !important;
     }}
     
-    /* ABSOLUTE GREEN INJECTION FOR EVERY SINGLE INPUT IN THE PROJECT */
+    /* PRECISION GREEN INJECTION FOR INNER INPUTS ONLY */
+    div[data-baseweb="input"], div[data-baseweb="base-input"] {{
+        background-color: #1e293b !important;
+        border: 2px solid #334155 !important;
+        border-radius: 8px !important;
+    }}
+    
+    div[data-baseweb="input"] input, div[data-baseweb="base-input"] input {{
+        color: #ffffff !important;
+        background-color: transparent !important;
+    }}
+    
+    /* OVERRIDE ONLY THE INNER BOX WHEN FOCUSED, NOT THE LABEL WRAPPER! */
     input:focus, textarea:focus, 
-    [data-baseweb="input"]:focus-within, [data-baseweb="base-input"]:focus-within,
-    .stTextInput:focus-within, .stChatInput:focus-within,
-    div[data-testid="stTextInput"] *:focus,
-    div[data-testid="stChatInput"] *:focus {{
+    div[data-baseweb="input"]:focus-within, 
+    div[data-baseweb="base-input"]:focus-within,
+    .stChatInput:focus-within {{
         border-color: #22c55e !important;
-        outline-color: #22c55e !important;
-        box-shadow: 0 0 0 1px #22c55e !important;
+        border: 2px solid #22c55e !important;
+        outline: none !important;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
     }}
     
     
