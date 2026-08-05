@@ -25,27 +25,38 @@ Return ONLY valid JSON (no markdown wrapping) matching exactly this format:
 
 class Orchestrator:
     def __init__(self):
+        # Gracefully handle missing API key in Streamlit Cloud environment
         if not os.getenv("GROQ_API_KEY"):
-            raise ValueError("GROQ_API_KEY not found.")
-        self.llm = ChatGroq(model=MODEL_NAME, temperature=0.5).bind(
-            response_format={"type": "json_object"}
-        )
+            # No API key; set LLM to None and log a warning (will be handled in run)
+            self.llm = None
+        else:
+            self.llm = ChatGroq(model=MODEL_NAME, temperature=0.5).bind(
+                response_format={"type": "json_object"}
+            )
         
     def run(self, topic: str):
         print(f"--- [ORCHESTRATOR] Single structured call for: {topic} ---")
         prompt = ChatPromptTemplate.from_template(SINGLE_PROMPT)
         
-        try:
-            chain = prompt | self.llm | JsonOutputParser()
-            result = chain.invoke({"topic": topic})
-        except Exception as e:
-            print(f"Parsing error: {e}")
-            # Absolute fallback
+        if self.llm is None:
+            # No LLM available; inform the user about missing API key.
             result = {
-                "article": f"Here is a summary on {topic}. (Error generating full dynamic content: {e})",
-                "flashcards": {"flashcards": [{"concept": "Error", "description": str(e)}]},
-                "quiz": None
+                "article": "GROQ_API_KEY is not configured. Please set the secret in Streamlit Cloud settings.",
+                "flashcards": {"flashcards": []},
+                "quiz": None,
             }
+        else:
+            try:
+                chain = prompt | self.llm | JsonOutputParser()
+                result = chain.invoke({"topic": topic})
+            except Exception as e:
+                print(f"Parsing error: {e}")
+                # Absolute fallback
+                result = {
+                    "article": f"Here is a summary on {topic}. (Error generating full dynamic content: {e})",
+                    "flashcards": {"flashcards": [{"concept": "Error", "description": str(e)}]},
+                    "quiz": None,
+                }
             
         return {
             "article": result.get("article", ""),
