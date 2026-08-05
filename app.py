@@ -88,13 +88,19 @@ def inject_custom_style():
     .viewerBadge_container__1QSob {{display: none !important;}}
 
     /* PERMANENTLY BRIGHTEN ALL HEADER ICONS (Sidebar Toggle, etc) */
+    header[data-testid="stHeader"] * {{
+        opacity: 1 !important;
+        visibility: visible !important;
+        color: #ffffff !important;
+        fill: #ffffff !important;
+        stroke: #ffffff !important;
+    }}
+    
     header[data-testid="stHeader"] button,
     button[kind="header"],
     [data-testid="stSidebarCollapsedControl"],
     [data-testid="collapsedControl"] {{
         opacity: 1 !important;
-        visibility: visible !important;
-        color: #ffffff !important;
         background-color: transparent !important;
     }}
     
@@ -102,8 +108,6 @@ def inject_custom_style():
     button[kind="header"] svg,
     [data-testid="stSidebarCollapsedControl"] svg,
     [data-testid="collapsedControl"] svg {{
-        fill: #ffffff !important;
-        stroke: #ffffff !important;
         opacity: 1 !important;
         width: 32px !important;
         height: 32px !important;
