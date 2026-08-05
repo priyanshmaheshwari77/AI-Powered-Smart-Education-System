@@ -781,11 +781,11 @@ def inject_keyboard_navigation():
             });
         }, 1000);
         
-        // Global keyboard shortcuts
+        // Global keyboard shortcuts (Capture Phase to override Streamlit BaseWeb navigation locking)
         document.addEventListener('keydown', function(e) {
             var active = document.activeElement;
             var tag = (active && active.tagName) ? active.tagName.toLowerCase() : '';
-            var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox') || tag === 'textarea' || (active && active.isContentEditable);
+            var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox' && active.type !== 'range') || tag === 'textarea' || (active && active.isContentEditable);
             
             // "Enter" or "Space" — Click the currently focused element (Wait for UI transitions)
             if ((e.key === 'Enter' || e.key === ' ') && active && !isTextInput) {
@@ -808,11 +808,20 @@ def inject_keyboard_navigation():
             
             var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
             
+            var getClickables = function() {
+                return Array.from(document.querySelectorAll('button, input, textarea, select, [role="tab"], [role="radio"]'))
+                            .filter(el => {
+                                if (el.disabled || el.tabIndex < 0 || el.offsetParent === null) return false;
+                                var label = (el.getAttribute('aria-label') || el.title || '').toLowerCase();
+                                if (label.includes('password text')) return false; // ignore eye icons
+                                return true;
+                            });
+            };
+            
             // "Enter" (inside a text input) — Act like "Tab" to go to the next field
             if (e.key === 'Enter' && isTextInput) {
                 e.preventDefault();
-                var clickables = Array.from(document.querySelectorAll('[tabindex="0"], button, input, textarea, select'))
-                                      .filter(el => el.tabIndex >= 0 && !el.disabled && el.offsetParent !== null);
+                var clickables = getClickables();
                 var currentIndex = clickables.indexOf(active);
                 if (currentIndex > -1 && currentIndex < clickables.length - 1) {
                     clickables[currentIndex + 1].focus();
@@ -833,8 +842,9 @@ def inject_keyboard_navigation():
                 }
                 
                 e.preventDefault();
-                var clickables = Array.from(document.querySelectorAll('[tabindex="0"], button, input, textarea, select'))
-                                      .filter(el => el.tabIndex >= 0 && !el.disabled && el.offsetParent !== null);
+                e.stopPropagation(); // Stop BaseWeb from stealing focus back!
+                
+                var clickables = getClickables();
                 
                 // Find exactly which element is focused, or default to -1
                 var currentIndex = clickables.indexOf(active);
@@ -903,7 +913,7 @@ def inject_keyboard_navigation():
                                  document.querySelector('button[kind="header"]');
                 if (sidebarBtn) { sidebarBtn.click(); }
             }
-        });
+        }, true); // Use capture phase to intercept before Streamlit
     })();
     </script>
     """, unsafe_allow_html=True)
