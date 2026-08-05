@@ -9,17 +9,24 @@ def init_history_db():
     """Initialize history table in SQLite."""
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS history
-                 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                  username TEXT, 
-                  topic TEXT, 
-                  full_content TEXT, 
-                  timestamp DATETIME)''')
-    conn.commit()
-    conn.close()
+    try:
+        c.execute('''CREATE TABLE IF NOT EXISTS history
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                      username TEXT, 
+                      topic TEXT, 
+                      full_content TEXT, 
+                      timestamp DATETIME)''')
+        conn.commit()
+    except sqlite3.OperationalError as e:
+        print(f"Warning: Could not initialize history DB: {e}")
+    finally:
+        conn.close()
 
 # Initialize on import
-init_history_db()
+try:
+    init_history_db()
+except Exception as e:
+    print(f"Failed to run init_history_db on import: {e}")
 
 def save_chat_history(username, topic, full_content):
     """Save learning history to SQLite."""

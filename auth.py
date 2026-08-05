@@ -9,13 +9,20 @@ def init_db():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     # Users Table
-    c.execute('''CREATE TABLE IF NOT EXISTS users
-                 (username TEXT PRIMARY KEY, email TEXT, password TEXT)''')
-    conn.commit()
-    conn.close()
+    try:
+        c.execute('''CREATE TABLE IF NOT EXISTS users
+                     (username TEXT PRIMARY KEY, email TEXT, password TEXT)''')
+        conn.commit()
+    except sqlite3.OperationalError as e:
+        print(f"Warning: Could not initialize auth DB (read-only file system?): {e}")
+    finally:
+        conn.close()
 
 # Initialize on import
-init_db()
+try:
+    init_db()
+except Exception as e:
+    print(f"Failed to run init_db on import: {e}")
 
 def signup(username, email, password):
     """Register a new user."""
