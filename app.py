@@ -82,8 +82,7 @@ def inject_custom_style():
     header .stAppDeployButton,
     .stAppDeployButton,
     .stDeployButton,
-    .viewerBadge_container__1QSob,
-    .stActionButton {{
+    .viewerBadge_container__1QSob {{
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
