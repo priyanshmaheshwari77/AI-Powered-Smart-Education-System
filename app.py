@@ -372,7 +372,7 @@ def inject_custom_style():
     /* PRECISION GREEN INJECTION FOR INNER INPUTS ONLY */
     div[data-baseweb="input"], div[data-baseweb="base-input"] {{
         background-color: #1e293b !important;
-        border: 2px solid #334155 !important;
+        border: 2px solid #22c55e !important;
         border-radius: 8px !important;
     }}
     
