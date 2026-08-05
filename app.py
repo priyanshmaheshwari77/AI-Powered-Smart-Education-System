@@ -117,6 +117,8 @@ def inject_custom_style():
     [data-testid="stSidebarCollapsedControl"] {{
         opacity: 1 !important;
         visibility: visible !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
     }}
     
     header[data-testid="stHeader"] button svg,
