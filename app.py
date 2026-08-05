@@ -96,10 +96,38 @@ def inject_custom_style():
         stroke: #ffffff !important;
     }}
     
-    header[data-testid="stHeader"] button,
-    button[kind="header"],
+    /* RESTORE STRUCTURAL TOGGLE */
     [data-testid="stSidebarCollapsedControl"],
     [data-testid="collapsedControl"] {{
+        display: flex !important;
+        visibility: visible !important;
+        z-index: 1000000 !important;
+        color: #ffffff !important;
+        background-color: #1e293b !important;
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 14px !important;
+        border: 1px solid #334155 !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        margin-top: 15px !important; 
+        margin-left: 15px !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+        opacity: 1 !important; 
+    }}
+    
+    [data-testid="stSidebarCollapsedControl"] svg,
+    [data-testid="collapsedControl"] svg {{
+        fill: #ffffff !important;
+        stroke: #ffffff !important;
+        opacity: 1 !important;
+        width: 32px !important;
+        height: 32px !important;
+    }}
+    
+    header[data-testid="stHeader"] button,
+    button[kind="header"] {{
         opacity: 1 !important;
         background-color: transparent !important;
     }}
