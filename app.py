@@ -576,6 +576,198 @@ def inject_custom_style():
 # Apply UI styles
 inject_custom_style()
 
+# ================= KEYBOARD NAVIGATION =================
+def inject_keyboard_navigation():
+    st.markdown("""
+    <style>
+    /* =========================================
+       KEYBOARD FOCUS INDICATORS
+       ========================================= */
+    
+    /* Show focus ring ONLY when using keyboard (not mouse clicks) */
+    body.keyboard-nav *:focus {
+        outline: 2px solid #3b82f6 !important;
+        outline-offset: 2px !important;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+    }
+    
+    /* Buttons get a brighter ring */
+    body.keyboard-nav .stButton > button:focus,
+    body.keyboard-nav [data-testid="stForm"] button:focus {
+        outline: 2px solid #60a5fa !important;
+        outline-offset: 3px !important;
+        box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.4) !important;
+    }
+    
+    /* Sidebar items */
+    body.keyboard-nav section[data-testid="stSidebar"] button:focus {
+        outline: 2px solid #60a5fa !important;
+        outline-offset: 2px !important;
+        background-color: #1e293b !important;
+    }
+    
+    /* Tab buttons */
+    body.keyboard-nav button[data-baseweb="tab"]:focus {
+        outline: 2px solid #60a5fa !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Radio buttons */
+    body.keyboard-nav [role="radiogroup"] [role="radio"]:focus {
+        outline: 2px solid #3b82f6 !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Chat input */
+    body.keyboard-nav .stChatInput textarea:focus {
+        outline: none !important;
+        border: 2px solid #60a5fa !important;
+        box-shadow: 0 0 20px rgba(96, 165, 250, 0.5) !important;
+    }
+    
+    /* Keyboard shortcut tooltip */
+    .kbd-help {
+        position: fixed;
+        bottom: 70px;
+        right: 20px;
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 16px 20px;
+        color: #e2e8f0;
+        font-size: 0.85rem;
+        z-index: 999999;
+        display: none;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+        min-width: 220px;
+    }
+    .kbd-help.visible { display: block; }
+    .kbd-help h4 {
+        margin: 0 0 10px 0;
+        color: #60a5fa;
+        font-size: 0.95rem;
+    }
+    .kbd-help .row {
+        display: flex;
+        justify-content: space-between;
+        margin: 6px 0;
+        align-items: center;
+    }
+    .kbd-help kbd {
+        background: #1e293b;
+        border: 1px solid #475569;
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-family: monospace;
+        font-size: 0.8rem;
+        color: #94a3b8;
+        min-width: 28px;
+        text-align: center;
+    }
+    .kbd-help .action {
+        color: #cbd5e1;
+        margin-right: 12px;
+    }
+    
+    /* Skip to content link */
+    .skip-link {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #3b82f6;
+        color: white !important;
+        padding: 10px 24px;
+        border-radius: 0 0 8px 8px;
+        z-index: 999999;
+        font-weight: 700;
+        text-decoration: none;
+        transition: top 0.2s ease;
+    }
+    .skip-link:focus {
+        top: 0 !important;
+        outline: none !important;
+    }
+    </style>
+    
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link" tabindex="1">Skip to Content</a>
+    
+    <!-- Keyboard shortcut help panel -->
+    <div class="kbd-help" id="kbdHelp">
+        <h4>⌨️ Keyboard Shortcuts</h4>
+        <div class="row"><span class="action">Focus chat</span><kbd>/</kbd></div>
+        <div class="row"><span class="action">New chat</span><kbd>Alt+N</kbd></div>
+        <div class="row"><span class="action">Toggle sidebar</span><kbd>Alt+S</kbd></div>
+        <div class="row"><span class="action">Unfocus</span><kbd>Esc</kbd></div>
+        <div class="row"><span class="action">Show/hide help</span><kbd>?</kbd></div>
+    </div>
+    
+    <span id="main-content"></span>
+    
+    <script>
+    (function() {
+        // Detect keyboard vs mouse navigation
+        document.body.addEventListener('keydown', function(e) {
+            document.body.classList.add('keyboard-nav');
+        });
+        document.body.addEventListener('mousedown', function() {
+            document.body.classList.remove('keyboard-nav');
+        });
+        
+        // Global keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            var tag = (e.target.tagName || '').toLowerCase();
+            var isInput = (tag === 'input' || tag === 'textarea' || e.target.isContentEditable);
+            
+            // "/" — Focus the chat input (only if not already typing)
+            if (e.key === '/' && !isInput) {
+                e.preventDefault();
+                var chatInput = document.querySelector('.stChatInput textarea');
+                if (chatInput) { chatInput.focus(); }
+            }
+            
+            // "?" — Toggle keyboard help (only if not already typing)
+            if (e.key === '?' && !isInput) {
+                var help = document.getElementById('kbdHelp');
+                if (help) { help.classList.toggle('visible'); }
+            }
+            
+            // "Escape" — Blur current element & close help
+            if (e.key === 'Escape') {
+                document.activeElement.blur();
+                var help = document.getElementById('kbdHelp');
+                if (help) { help.classList.remove('visible'); }
+            }
+            
+            // "Alt+N" — Click the New Chat button
+            if (e.altKey && e.key.toLowerCase() === 'n') {
+                e.preventDefault();
+                var buttons = document.querySelectorAll('button');
+                for (var i = 0; i < buttons.length; i++) {
+                    if (buttons[i].textContent.trim().toUpperCase().includes('NEW CHAT')) {
+                        buttons[i].click();
+                        break;
+                    }
+                }
+            }
+            
+            // "Alt+S" — Toggle sidebar
+            if (e.altKey && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                var sidebarBtn = document.querySelector('[data-testid="stSidebarCollapsedControl"] button') ||
+                                 document.querySelector('[data-testid="collapsedControl"] button') ||
+                                 document.querySelector('button[kind="header"]');
+                if (sidebarBtn) { sidebarBtn.click(); }
+            }
+        });
+    })();
+    </script>
+    """, unsafe_allow_html=True)
+
+inject_keyboard_navigation()
+
 
 
 # --- Auth Logic (If Limit Reached or Manual Login) ---
