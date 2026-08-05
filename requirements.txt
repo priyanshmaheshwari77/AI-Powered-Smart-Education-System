@@ -4,4 +4,3 @@ langchain-groq
 python-dotenv
 duckduckgo-search
 requests
-bcrypt

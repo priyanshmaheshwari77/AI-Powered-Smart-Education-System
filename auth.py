@@ -1,5 +1,5 @@
 import sqlite3
-import bcrypt
+import hashlib
 import os
 
 DB_PATH = "edu_vision.db"
@@ -22,8 +22,8 @@ def signup(username, email, password):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     
-    # Hash password
-    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    # Hash password using sha256
+    hashed = hashlib.sha256(password.encode('utf-8')).hexdigest()
     
     try:
         c.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", 
@@ -46,7 +46,7 @@ def login(username, password):
     if result:
         stored_password = result[0]
         try:
-            return bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8'))
+            return hashlib.sha256(password.encode('utf-8')).hexdigest() == stored_password
         except Exception:
             return False
     return False
@@ -67,7 +67,7 @@ def update_password(username, new_password):
     """Update user password."""
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    hashed = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    hashed = hashlib.sha256(new_password.encode('utf-8')).hexdigest()
     c.execute("UPDATE users SET password = ? WHERE username = ?", (hashed, username))
     conn.commit()
     rows_affected = c.rowcount
