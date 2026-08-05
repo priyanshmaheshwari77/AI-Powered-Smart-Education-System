@@ -734,28 +734,38 @@ def inject_keyboard_navigation():
         
         // AGGRESSIVE TABINDEX ENFORCER: Ensure ALL buttons and inputs are focusable
         setInterval(function() {
-            var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button');
+            var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div');
             clickables.forEach(function(el) {
-                if (!el.hasAttribute('tabindex')) {
+                // Ignore elements that specifically disable themselves
+                if (el.disabled) return;
+                if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') {
                     el.setAttribute('tabindex', '0');
                 }
             });
-        }, 1500);
+        }, 1000);
         
         // Global keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            var tag = (e.target.tagName || '').toLowerCase();
             var active = document.activeElement;
-            var isInput = (tag === 'input' || tag === 'textarea' || e.target.isContentEditable);
+            var tag = (active && active.tagName) ? active.tagName.toLowerCase() : '';
+            var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox') || tag === 'textarea' || (active && active.isContentEditable);
             
-            // "Enter" or "Space" — Click the currently focused element if it's a structural button
-            if ((e.key === 'Enter' || e.key === ' ') && active) {
-                // If it's a native form input or text area, let it act normally
-                if (tag !== 'input' && tag !== 'textarea' && active.getAttribute('role') !== 'radio') {
-                    if (typeof active.click === 'function') {
-                        e.preventDefault(); // Prevent page scroll on Space
-                        active.click();
-                    }
+            // "Enter" or "Space" — Click the currently focused element (Wait for UI transitions)
+            if ((e.key === 'Enter' || e.key === ' ') && active && !isTextInput) {
+                e.preventDefault(); 
+                
+                // If it's a radio button label, we need to click its internal input
+                var targetToClick = active;
+                if (active.tagName.toLowerCase() === 'label' && active.hasAttribute('data-baseweb')) {
+                    var internalInput = active.querySelector('input[type="radio"]');
+                    if (internalInput) targetToClick = internalInput;
+                }
+                
+                if (typeof targetToClick.click === 'function') {
+                    targetToClick.click();
+                } else {
+                    var evt = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
+                    targetToClick.dispatchEvent(evt);
                 }
             }
             
