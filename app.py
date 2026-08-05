@@ -408,14 +408,16 @@ def inject_custom_style():
         stroke: #22c55e !important;
     }}
 
-    /* FOOLPROOF DEEP STRUCTURAL GREEN TARGETING */
-    div:has(> input), div:has(> textarea), div[data-testid="stChatInputContainer"] > div:first-child {{
+    /* CROSS-BROWSER NEXT-SIBLING GREEN TARGETING */
+    div[data-testid="stWidgetLabel"] + div, 
+    div[data-testid="stChatInputContainer"] > div:first-child {{
         background-color: #1e293b !important;
         border: 2px solid #22c55e !important;
         border-radius: 8px !important;
     }}
     
-    div:has(> input):focus-within, div:has(> textarea):focus-within, div[data-testid="stChatInputContainer"] > div:first-child:focus-within {{
+    div[data-testid="stWidgetLabel"] + div:focus-within, 
+    div[data-testid="stChatInputContainer"] > div:first-child:focus-within {{
         border-color: #22c55e !important;
         box-shadow: 0 0 0 1px #22c55e !important;
     }}
