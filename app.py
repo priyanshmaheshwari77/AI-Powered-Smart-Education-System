@@ -843,7 +843,8 @@ def inject_keyboard_navigation():
             }
             
             if (arrowKeys.includes(e.key)) {
-                if (isTextInput || tag === 'textarea') return;
+                if (tag === 'textarea') return; 
+                if (isTextInput && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) return;
                 
                 e.preventDefault();
                 e.stopPropagation();
