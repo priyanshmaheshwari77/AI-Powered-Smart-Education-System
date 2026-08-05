@@ -17,7 +17,7 @@ def init_history_db():
                       full_content TEXT, 
                       timestamp DATETIME)''')
         conn.commit()
-    except sqlite3.OperationalError as e:
+    except Exception as e:
         print(f"Warning: Could not initialize history DB: {e}")
     finally:
         conn.close()

@@ -13,7 +13,7 @@ def init_db():
         c.execute('''CREATE TABLE IF NOT EXISTS users
                      (username TEXT PRIMARY KEY, email TEXT, password TEXT)''')
         conn.commit()
-    except sqlite3.OperationalError as e:
+    except Exception as e:
         print(f"Warning: Could not initialize auth DB (read-only file system?): {e}")
     finally:
         conn.close()
