@@ -42,11 +42,11 @@ def add_premium_background():
         [data-testid="stAppViewContainer"] {
             background-color: #0f172a !important;
             background-image: none !important;
-            box-shadow: inset 0 0 100px 30px rgba(17, 34, 150, 0.4) !important;
-            border: 2px solid rgba(29, 78, 216, 0.5) !important;
+            box-shadow: inset 0 0 100px 30px rgba(22, 101, 52, 0.4) !important;
+            border: 2px solid rgba(34, 197, 94, 0.5) !important;
         }
         .stApp {
-            box-shadow: inset 0 0 120px 20px rgba(17, 34, 150, 0.4) !important;
+            box-shadow: inset 0 0 120px 20px rgba(22, 101, 52, 0.4) !important;
         }
         body {
             background-color: #0f172a !important;
@@ -157,7 +157,7 @@ def inject_custom_style():
        
     /* STREAMLIT PRIMARY THEME VARIABLE LOCK */
     :root, .stApp, section {{
-        --primary-color: #3b82f6 !important;
+        --primary-color: #22c55e !important;
     }}
 
     html, body {{
@@ -231,7 +231,7 @@ def inject_custom_style():
         background-color: #1e293b !important;
         color: #ffffff !important;
         caret-color: #ffffff !important;
-        border: 2px solid #3b82f6 !important;
+        border: 2px solid #22c55e !important;
         border-radius: 24px !important;
         padding: 16px 20px !important;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
@@ -250,9 +250,9 @@ def inject_custom_style():
     .stChatInput textarea:focus-visible,
     .stChatInput textarea:focus-within {{
         background-color: #0f172a !important;
-        border: 2px solid #3b82f6 !important;
-        border-color: #3b82f6 !important;
-        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6) !important;
+        border: 2px solid #22c55e !important;
+        border-color: #22c55e !important;
+        box-shadow: 0 4px 20px rgba(34, 197, 94, 0.6) !important;
         outline: none !important;
         outline-color: transparent !important;
     }}
@@ -266,7 +266,7 @@ def inject_custom_style():
     div[data-testid="stChatInputContainer"]:focus-within *,
     div[data-testid="stChatInput"]:focus-within *,
     .stChatInput:focus-within * {{
-        border-color: #3b82f6 !important;
+        border-color: #22c55e !important;
     }}
     
 
@@ -298,7 +298,7 @@ def inject_custom_style():
        GLOBAL BUTTON STYLING (Solid Dark Mode)
        ========================================= */
     .stButton > button {{
-        background-color: #3b82f6 !important;
+        background-color: #22c55e !important;
         color: #ffffff !important;
         border: none !important;
         border-radius: 8px !important;
@@ -308,8 +308,8 @@ def inject_custom_style():
     }}
     
     .stButton > button:hover {{
-        background-color: #60a5fa !important;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
+        background-color: #4ade80 !important;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
         transform: translateY(-1px) !important;
     }}
     
@@ -387,11 +387,11 @@ def inject_custom_style():
         opacity: 0.9 !important;
     }}
 
-    /* FIX GLOBAL INPUT FOCUS STATES (Green) */
+    /* FIX GLOBAL INPUT FOCUS STATES (Green Borders) */
     div[data-baseweb="input"]:focus-within,
     div[data-baseweb="base-input"]:focus-within {{
-        border-color: #3b82f6 !important;
-        box-shadow: 0 0 12px 1px rgba(59, 130, 246, 0.7) !important;
+        border-color: #22c55e !important;
+        box-shadow: 0 0 12px 1px rgba(34, 197, 94, 0.7) !important;
     }}
     
     /* ANNIHILATE ALL BORDERS ON UNDERLYING TEXT INPUT ELEMENTS NATIVELY */
@@ -414,24 +414,24 @@ def inject_custom_style():
         background-color: transparent !important;
     }}
     
-    /* ENFORCE BLUE ARROW SVG FILL INSTEAD OF NATIVE RED */
+    /* ENFORCE GREEN ARROW SVG FILL INSTEAD OF NATIVE RED */
     .stChatInput button:focus svg, [data-testid="stChatInputSubmitButton"]:focus svg, [data-testid="stChatInputSubmitButton"]:hover svg {{
-        fill: #3b82f6 !important;
-        stroke: #3b82f6 !important;
+        fill: #22c55e !important;
+        stroke: #22c55e !important;
     }}
 
-    /* CROSS-BROWSER NEXT-SIBLING BLUE TARGETING */
+    /* CROSS-BROWSER NEXT-SIBLING GREEN TARGETING */
     div[data-testid="stWidgetLabel"] + div, 
     div[data-testid="stChatInputContainer"] > div:first-child {{
         background-color: #1e293b !important;
-        border: 2px solid #3b82f6 !important;
+        border: 2px solid #22c55e !important;
         border-radius: 8px !important;
     }}
     
     div[data-testid="stWidgetLabel"] + div:focus-within, 
     div[data-testid="stChatInputContainer"] > div:first-child:focus-within {{
-        border-color: #3b82f6 !important;
-        box-shadow: 0 0 12px 1px rgba(59, 130, 246, 0.7) !important;
+        border-color: #22c55e !important;
+        box-shadow: 0 0 12px 1px rgba(34, 197, 94, 0.7) !important;
     }}
     
     div[data-baseweb="input"] input, div[data-baseweb="base-input"] input {{
@@ -444,14 +444,14 @@ def inject_custom_style():
     div[data-baseweb="input"]:focus-within, 
     div[data-baseweb="base-input"]:focus-within,
     .stChatInput:focus-within {{
-        border-color: #3b82f6 !important;
-        border: 2px solid #3b82f6 !important;
+        border-color: #22c55e !important;
+        border: 2px solid #22c55e !important;
         outline: none !important;
-        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6) !important;
+        box-shadow: 0 4px 20px rgba(34, 197, 94, 0.6) !important;
     }}
     
     
-    /* SUPER FITTED BLUE BOUNDARY - REMOVES ANY GAPS */
+    /* SUPER FITTED GREEN BOUNDARY - REMOVES ANY GAPS */
     .stChatInput textarea {{
         border: none !important; 
         box-shadow: none !important;
@@ -462,8 +462,8 @@ def inject_custom_style():
     }}
     
     .stChatInput:focus-within {{
-        border: 2px solid #3b82f6 !important;
-        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6) !important;
+        border: 2px solid #22c55e !important;
+        box-shadow: 0 4px 20px rgba(34, 197, 94, 0.6) !important;
         background-color: transparent !important;
     }}
 
@@ -480,11 +480,11 @@ def inject_custom_style():
         opacity: 1 !important;
     }}
     button[data-baseweb="tab"][aria-selected="true"] * {{
-        color: #60a5fa !important;
+        color: #4ade80 !important;
     }}
     
     [data-testid="stForm"] button {{
-        background-color: #3b82f6 !important;
+        background-color: #22c55e !important;
         color: white !important;
         font-weight: bold !important;
         border: none !important;
@@ -492,9 +492,9 @@ def inject_custom_style():
     }}
     
     [data-testid="stForm"] button:hover {{
-        background-color: #60a5fa !important;
+        background-color: #4ade80 !important;
         transform: scale(1.02) !important;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
     }}
 
     /* =========================================
@@ -644,8 +644,8 @@ with main_container:
         if isinstance(content, dict):
             # 1. Article
             st.markdown("""
-            <div style="background: #1e293b; border-left: 5px solid #38bdf8; padding: 10px 15px; margin: 20px 0; border-radius: 4px;">
-                <h3 style="margin: 0; color: #38bdf8; font-weight: bold;"> Course Material</h3>
+            <div style="background: #1e293b; border-left: 5px solid #22c55e; padding: 10px 15px; margin: 20px 0; border-radius: 4px;">
+                <h3 style="margin: 0; color: #4ade80; font-weight: bold;"> Course Material</h3>
             </div>
             """, unsafe_allow_html=True)
             st.markdown(content.get('article', ''))
@@ -654,8 +654,8 @@ with main_container:
             flashcards = content.get('flashcards')
             if flashcards and 'flashcards' in flashcards:
                 st.markdown("""
-                <div style="background: #1e293b; border-left: 5px solid #a855f7; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #d8b4fe; font-weight: bold;"> Concept Flashcards</h3>
+                <div style="background: #1e293b; border-left: 5px solid #22c55e; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
+                    <h3 style="margin: 0; color: #86efac; font-weight: bold;"> Concept Flashcards</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 # Create a horizontal scroll or grid for flashcards
@@ -664,7 +664,7 @@ with main_container:
                     with cols[idx % 3]:
                         st.markdown(f"""
                         <div style="border: 1px solid #334155; border-radius: 12px; padding: 15px; background: #0f172a; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                            <h4 style="margin-top:0; color: #c084fc;">{fc['concept']}</h4>
+                            <h4 style="margin-top:0; color: #4ade80;">{fc['concept']}</h4>
                             <p style="font-size: 0.9rem; color: #e2e8f0;">{fc['description']}</p>
                         </div>
                         """, unsafe_allow_html=True)
@@ -677,8 +677,8 @@ with main_container:
             quiz = content.get('quiz')
             if quiz and 'questions' in quiz:
                 st.markdown("""
-                <div style="background: #1e293b; border-left: 5px solid #ec4899; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #f472b6; font-weight: bold;"> Knowledge Check</h3>
+                <div style="background: #1e293b; border-left: 5px solid #22c55e; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
+                    <h3 style="margin: 0; color: #86efac; font-weight: bold;"> Knowledge Check</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 st.markdown("""
@@ -686,7 +686,7 @@ with main_container:
                 .quiz-card {
                     background: #1e293b;
                     border: 1px solid #334155;
-                    border-left: 4px solid #3b82f6;
+                    border-left: 4px solid #22c55e;
                     border-radius: 12px;
                     padding: 20px;
                     margin-bottom: 20px;
