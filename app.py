@@ -42,6 +42,11 @@ def add_premium_background():
         [data-testid="stAppViewContainer"] {
             background-color: #0f172a !important;
             background-image: none !important;
+            box-shadow: inset 0 0 100px 30px rgba(56, 189, 248, 0.3) !important;
+            border: 2px solid rgba(56, 189, 248, 0.4) !important;
+        }
+        .stApp {
+            box-shadow: inset 0 0 120px 20px rgba(56, 189, 248, 0.25) !important;
         }
         body {
             background-color: #0f172a !important;
