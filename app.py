@@ -843,12 +843,14 @@ def inject_keyboard_navigation():
                 }
             }
             
-            var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+            var arrows = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
             
                 var getClickables = function() {
                     return Array.from(document.querySelectorAll('button, input, textarea, select, [role="tab"], [role="radio"]'))
                                 .filter(el => {
-                                    if (el.disabled || el.tabIndex < 0 || el.offsetParent === null) return false;
+                                    if (el.disabled || el.tabIndex < 0) return false;
+                                    var style = window.getComputedStyle(el);
+                                    if (style.display === 'none' || style.visibility === 'hidden') return false;
                                     var label = (el.getAttribute('aria-label') || el.title || '').toLowerCase();
                                     if (label.includes('password text')) return false; // ignore eye icons
                                     return true;
@@ -856,7 +858,7 @@ def inject_keyboard_navigation():
                 };
             
             // Omnidirectional Arrow Key Navigation
-            if (arrowKeys.includes(e.key)) {
+            if (arrows.includes(e.key)) {
                 // If the user is typing in an input field or textarea, 
                 // ENTIRELY release control to the browser.
                 // This allows native Autocomplete menus (ArrowDown/Up) and Text Caret movement (ArrowLeft/Right)
