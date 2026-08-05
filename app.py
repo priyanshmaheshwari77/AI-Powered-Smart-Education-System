@@ -77,13 +77,13 @@ def inject_custom_style():
     
     /* Hide specific deployment/github icons */
     .stDeployButton {{display: none;}}
-    [data-testid="stToolbar"] {{
-        visibility: visible !important;
-        background-color: transparent !important;
-    }}
-    [data-testid="stHeader"] {{
-        visibility: visible !important;
-        background-color: transparent !important;
+    [data-testid="stToolbar"],
+    #MainMenu,
+    .stAppDeployButton {{
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }}
     .viewerBadge_container__1QSob {{display: none !important;}}
 
