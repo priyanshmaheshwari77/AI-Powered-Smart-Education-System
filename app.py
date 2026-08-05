@@ -769,6 +769,9 @@ def inject_keyboard_navigation():
     js_code = """
     <script>
     (function() {
+        if (window.parent.__eduvision_injected) return;
+        window.parent.__eduvision_injected = true;
+        
         var pDoc = window.parent.document;
         pDoc.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
         
