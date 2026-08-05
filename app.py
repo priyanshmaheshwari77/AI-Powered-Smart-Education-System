@@ -370,18 +370,29 @@ def inject_custom_style():
     }}
     
     /* ANNIHILATE ALL BORDERS ON UNDERLYING TEXT INPUT ELEMENTS NATIVELY */
-    .stTextInput input, .stTextInput textarea, .stPasswordInput input, [data-baseweb="base-input"] input {{
+    .stTextInput input, .stTextInput textarea, .stPasswordInput input, [data-baseweb="base-input"] input,
+    .stChatInput button, .stChatInput svg, button[kind="secondary"] {{
         border: none !important;
         border-color: transparent !important;
         outline: none !important;
         box-shadow: none !important;
     }}
     
-    .stTextInput input:focus, .stTextInput textarea:focus, .stPasswordInput input:focus, [data-baseweb="base-input"] input:focus {{
+    .stTextInput input:focus, .stTextInput textarea:focus, .stPasswordInput input:focus, 
+    [data-baseweb="base-input"] input:focus, .stChatInput button:focus, .stChatInput button:active,
+    .stChatInput button:hover, button[kind="secondary"]:focus, button[kind="secondary"]:hover,
+    svg:focus, svg:active, svg:hover, [data-testid="stChatInputSubmitButton"]:focus {{
         border: none !important;
         border-color: transparent !important;
         outline: none !important;
         box-shadow: none !important;
+        background-color: transparent !important;
+    }}
+    
+    /* ENFORCE GREEN ARROW SVG FILL INSTEAD OF NATIVE RED */
+    .stChatInput button:focus svg, [data-testid="stChatInputSubmitButton"]:focus svg, [data-testid="stChatInputSubmitButton"]:hover svg {{
+        fill: #22c55e !important;
+        stroke: #22c55e !important;
     }}
 
     /* PRECISION GREEN INJECTION FOR INNER INPUTS ONLY */
