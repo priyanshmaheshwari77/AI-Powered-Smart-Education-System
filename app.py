@@ -396,17 +396,13 @@ def inject_custom_style():
     }}
 
     /* FOOLPROOF DEEP STRUCTURAL GREEN TARGETING */
-    div[data-testid="stTextInput"] > div:nth-child(2),
-    div[data-testid="stTextInputRootElement"] > div:nth-child(2),
-    div[data-testid="stChatInputContainer"] > div:first-child {{
+    div:has(> input), div:has(> textarea), div[data-testid="stChatInputContainer"] > div:first-child {{
         background-color: #1e293b !important;
         border: 2px solid #22c55e !important;
         border-radius: 8px !important;
     }}
     
-    div[data-testid="stTextInput"] > div:nth-child(2):focus-within,
-    div[data-testid="stTextInputRootElement"] > div:nth-child(2):focus-within,
-    div[data-testid="stChatInputContainer"] > div:first-child:focus-within {{
+    div:has(> input):focus-within, div:has(> textarea):focus-within, div[data-testid="stChatInputContainer"] > div:first-child:focus-within {{
         border-color: #22c55e !important;
         box-shadow: 0 0 0 1px #22c55e !important;
     }}
