@@ -77,13 +77,16 @@ def inject_custom_style():
     
     /* Hide specific deployment/github icons */
     .stDeployButton {{display: none;}}
-    [data-testid="stToolbar"],
-    #MainMenu,
-    .stAppDeployButton {{
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
+    /* RESTORE MENU - Lock via CSS Instead */
+    [data-testid="stToolbar"] {{ 
+        visibility: visible !important; 
+    }}
+    
+    /* ABSOLUTE DARK MODE LOCK - Ignores light toggle */
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
+        background-color: #0f172a !important;
+        background: #0f172a !important;
+        color: #ffffff !important;
     }}
     .viewerBadge_container__1QSob {{display: none !important;}}
 
