@@ -789,7 +789,9 @@ def inject_keyboard_navigation():
             
             var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div');
             clickables.forEach(function(el) {
-                if (el.disabled || window.getComputedStyle(el).display === 'none') return;
+                if (el.disabled) return;
+                var rect = el.getBoundingClientRect();
+                if (rect.width === 0 || rect.height === 0) return;
                 if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') {
                     el.setAttribute('tabindex', '0');
                 }
@@ -823,7 +825,9 @@ def inject_keyboard_navigation():
             var getClickables = function() {
                 return Array.from(document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div'))
                             .filter(el => {
-                                if (el.disabled || el.tabIndex < 0 || window.getComputedStyle(el).display === 'none') return false;
+                                if (el.disabled || el.tabIndex < 0) return false;
+                                var rect = el.getBoundingClientRect();
+                                if (rect.width === 0 || rect.height === 0) return false;
                                 return true;
                             });
             };
