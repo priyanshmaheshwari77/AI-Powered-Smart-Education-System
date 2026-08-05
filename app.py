@@ -769,66 +769,41 @@ def inject_keyboard_navigation():
     js_code = """
     <script>
     (function() {
-        var pDoc = window.parent.document;
-        if (pDoc.getElementById('eduvision-keyboard-injector')) {
-            return; // Already immortalized in the parent window.
-        }
+        document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
         
-        var script = pDoc.createElement('script');
-        script.id = 'eduvision-keyboard-injector';
-        script.textContent = `
-            document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
+        setInterval(function() {
+            var tabLists = document.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]');
+            tabLists.forEach(function(list) {
+                list.style.setProperty("justify-content", "center", "important");
+                list.style.setProperty("display", "flex", "important");
+                list.style.setProperty("width", "100%", "important");
+                list.style.setProperty("border-bottom", "none", "important");
+            });
             
-            window.__eduvision_focus = window.__eduvision_focus || { type: null, text: null, label: null };
-            function saveFoc(el) {
-                if (!el || el.tagName === 'BODY') return;
-                window.__eduvision_focus = {
-                    type: el.tagName,
-                    text: el.innerText ? el.innerText.trim() : null,
-                    label: el.getAttribute('aria-label') || el.name || null
-                };
-            }
+            var artifacts = document.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]');
+            artifacts.forEach(function(el) {
+                el.style.setProperty("display", "none", "important");
+                el.style.setProperty("height", "0px", "important");
+                el.style.setProperty("opacity", "0", "important");
+            });
             
-            setInterval(function() {
-                var active = document.activeElement;
-            
-                if (!active || active.tagName === 'BODY') {
-                    var mem = window.__eduvision_focus;
-                    if (mem.type) {
-                        var el = Array.from(document.querySelectorAll(mem.type)).find(e => 
-                            (mem.label && (e.getAttribute('aria-label') === mem.label || e.name === mem.label)) ||
-                            (mem.text && e.innerText && e.innerText.trim() === mem.text)
-                        );
-                        if (el) el.focus();
-                    }
-                } else { saveFoc(active); }
-                
-                document.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]').forEach(l => {
-                    l.style.setProperty("justify-content", "center", "important");
-                    l.style.setProperty("display", "flex", "important");
-                    l.style.setProperty("width", "100%", "important");
-                    l.style.setProperty("border-bottom", "none", "important");
-                });
-                document.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]').forEach(el => {
-                    el.style.setProperty("display", "none", "important");
-                });
-                
-                document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"]').forEach(el => {
-                    if (el.disabled || window.getComputedStyle(el).display === 'none') return;
-                    if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') el.setAttribute('tabindex', '0');
-                });
-            }, 300);
-            
-            document.addEventListener('keydown', function(e) {
-                var active = document.activeElement;
+            var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div');
+            clickables.forEach(function(el) {
+                if (el.disabled || window.getComputedStyle(el).display === 'none') return;
+                if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') {
+                    el.setAttribute('tabindex', '0');
+                }
+            });
+        }, 300);
+        
+        document.addEventListener('keydown', function(e) {
+            var active = document.activeElement;
             var tag = (active && active.tagName) ? active.tagName.toLowerCase() : '';
             var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox' && active.type !== 'range') || tag === 'textarea' || (active && active.isContentEditable);
             
-            // "Enter" or "Space" — Click the currently focused element (Wait for UI transitions)
             if ((e.key === 'Enter' || e.key === ' ') && active && !isTextInput) {
                 e.preventDefault(); 
                 
-                // If it's a radio button label, we need to click its internal input
                 var targetToClick = active;
                 if (active.tagName.toLowerCase() === 'label' && active.hasAttribute('data-baseweb')) {
                     var internalInput = active.querySelector('input[type="radio"]');
@@ -843,97 +818,91 @@ def inject_keyboard_navigation():
                 }
             }
             
-            var arrows = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+            var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
             
-                var getClickables = function() {
-                    return Array.from(document.querySelectorAll('button, input, textarea, select, [role="tab"], [role="radio"]'))
-                                .filter(el => {
-                                    if (el.disabled || el.tabIndex < 0) return false;
-                                    var style = window.getComputedStyle(el);
-                                    if (style.display === 'none' || style.visibility === 'hidden') return false;
-                                    var label = (el.getAttribute('aria-label') || el.title || '').toLowerCase();
-                                    if (label.includes('password text')) return false; // ignore eye icons
-                                    return true;
-                                });
-                };
+            var getClickables = function() {
+                return Array.from(document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div'))
+                            .filter(el => {
+                                if (el.disabled || el.tabIndex < 0 || window.getComputedStyle(el).display === 'none') return false;
+                                return true;
+                            });
+            };
             
-            // Omnidirectional Arrow Key Navigation
-            if (arrows.includes(e.key)) {
-                // If the user is typing in an input field or textarea, 
-                // ENTIRELY release control to the browser.
-                // This allows native Autocomplete menus (ArrowDown/Up) and Text Caret movement (ArrowLeft/Right)
-                if (isTextInput || tag === 'textarea') return;
+            if (e.key === 'Enter' && isTextInput) {
+                e.preventDefault();
+                var clickables = getClickables();
+                var currentIndex = clickables.indexOf(active);
+                if (currentIndex > -1 && currentIndex < clickables.length - 1) {
+                    clickables[currentIndex + 1].focus();
+                }
+            }
+            
+            if (arrowKeys.includes(e.key)) {
+                if (isTextInput && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) return;
                 
                 e.preventDefault();
-                e.stopPropagation(); // Stop BaseWeb from stealing focus back!
+                e.stopPropagation();
                 
-                var clickables = getClickables();
-                
-                // Find exactly which element is focused, or default to -1
-                var currentIndex = clickables.indexOf(active);
-                var elementToFocus = null;
+                var arr = getClickables();
+                var idx = arr.indexOf(active);
+                var toFocus = null;
                 
                 if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-                    if (currentIndex > -1 && currentIndex < clickables.length - 1) {
-                        elementToFocus = clickables[currentIndex + 1];
-                    } else if (clickables.length > 0) {
-                        elementToFocus = clickables[0]; // Wrap to beginning if lost
-                    }
+                    if (idx > -1 && idx < arr.length - 1) toFocus = arr[idx + 1];
+                    else if (arr.length > 0) toFocus = arr[0];
                 } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-                    if (currentIndex > 0) {
-                        elementToFocus = clickables[currentIndex - 1];
-                    } else if (clickables.length > 0) {
-                        elementToFocus = clickables[clickables.length - 1]; // Wrap backwards
-                    }
+                    if (idx > 0) toFocus = arr[idx - 1];
+                    else if (arr.length > 0) toFocus = arr[arr.length - 1];
                 }
                 
-                if (elementToFocus) {
-                    elementToFocus.focus();
-                    // If moving into a Tab, execute click to trigger streamlits internal frame update
-                    if (elementToFocus.getAttribute('role') === 'tab' || elementToFocus.hasAttribute('data-baseweb')) {
-                        if (typeof elementToFocus.click === 'function') elementToFocus.click();
+                if (toFocus) {
+                    toFocus.focus();
+                    if (toFocus.getAttribute('role') === 'tab' || toFocus.hasAttribute('data-baseweb')) {
+                        if (typeof toFocus.click === 'function') toFocus.click();
                     }
                 }
             }
             
-            // "/" — Focus the chat input (only if not already typing)
-                if (e.key === '/' && !isTextInput) {
-                    e.preventDefault();
-                    var chatInput = document.querySelector('.stChatInput textarea');
-                    if (chatInput) { chatInput.focus(); saveFoc(chatInput); }
-                }
-                if (e.key === '?' && !isTextInput) {
-                    var help = document.getElementById('kbdHelp');
-                    if (help) { help.classList.toggle('visible'); }
-                }
-                if (e.key === 'Escape') {
-                    if (active) active.blur();
-                    var help = document.getElementById('kbdHelp');
-                    if (help) { help.classList.remove('visible'); }
-                }
-                if (e.altKey && e.key.toLowerCase() === 'n') {
-                    e.preventDefault();
-                    var buttons = document.querySelectorAll('button');
-                    for (var i = 0; i < buttons.length; i++) {
-                        if (buttons[i].textContent.trim().toUpperCase().includes('NEW CHAT')) {
-                            buttons[i].click();
-                            break;
-                        }
+            if (e.key === '/' && !isTextInput) {
+                e.preventDefault();
+                var chatInput = document.querySelector('.stChatInput textarea');
+                if (chatInput) { chatInput.focus(); }
+            }
+            if (e.key === '?' && !isTextInput) {
+                var help = document.getElementById('kbdHelp');
+                if (help) { help.classList.toggle('visible'); }
+            }
+            if (e.key === 'Escape') {
+                if (active) active.blur();
+                var help = document.getElementById('kbdHelp');
+                if (help) { help.classList.remove('visible'); }
+            }
+            if (e.altKey && e.key.toLowerCase() === 'n') {
+                e.preventDefault();
+                var buttons = document.querySelectorAll('button');
+                for (var i = 0; i < buttons.length; i++) {
+                    if (buttons[i].textContent.trim().toUpperCase().includes('NEW CHAT')) {
+                        buttons[i].click();
+                        break;
                     }
                 }
-                if (e.altKey && e.key.toLowerCase() === 's') {
-                    e.preventDefault();
-                    var sidebarBtn = document.querySelector('[data-testid="stSidebarCollapsedControl"] button') ||
-                                     document.querySelector('[data-testid="collapsedControl"] button') ||
-                                     document.querySelector('button[kind="header"]');
-                    if (sidebarBtn) { sidebarBtn.click(); }
-                }
-            }, true);
-        `;
-        pDoc.head.appendChild(script);
+            }
+            if (e.altKey && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                var sidebarBtn = document.querySelector('[data-testid="stSidebarCollapsedControl"] button') ||
+                                 document.querySelector('[data-testid="collapsedControl"] button') ||
+                                 document.querySelector('button[kind="header"]');
+                if (sidebarBtn) { sidebarBtn.click(); }
+            }
+        }, true);
     })();
     </script>
     """
+    
+    js_code = js_code.replace("document.", "window.parent.document.")
+    js_code = js_code.replace("window.", "window.parent.")
+    js_code = js_code.replace("window.parent.parent.document", "window.parent.document")
+    js_code = js_code.replace("view: window.parent", "view: window.parent")
     
     import streamlit.components.v1 as components
     components.html(js_code, height=0)
