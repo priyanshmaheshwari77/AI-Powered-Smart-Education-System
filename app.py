@@ -769,8 +769,30 @@ def inject_keyboard_navigation():
                 }
             }
             
+            // "Enter" (inside a text input) or "ArrowDown" — Act like "Tab" to go to the next field
+            if ((e.key === 'Enter' && isTextInput) || (e.key === 'ArrowDown' && tag !== 'textarea')) {
+                e.preventDefault();
+                var clickables = Array.from(document.querySelectorAll('[tabindex="0"], button, input, textarea, select'))
+                                      .filter(el => el.tabIndex >= 0 && !el.disabled && el.offsetParent !== null);
+                var currentIndex = clickables.indexOf(active);
+                if (currentIndex > -1 && currentIndex < clickables.length - 1) {
+                    clickables[currentIndex + 1].focus();
+                }
+            }
+            
+            // "ArrowUp" — Act like "Shift+Tab" to go to the previous field
+            if (e.key === 'ArrowUp' && tag !== 'textarea') {
+                e.preventDefault();
+                var clickables = Array.from(document.querySelectorAll('[tabindex="0"], button, input, textarea, select'))
+                                      .filter(el => el.tabIndex >= 0 && !el.disabled && el.offsetParent !== null);
+                var currentIndex = clickables.indexOf(active);
+                if (currentIndex > 0) {
+                    clickables[currentIndex - 1].focus();
+                }
+            }
+            
             // "/" — Focus the chat input (only if not already typing)
-            if (e.key === '/' && !isInput) {
+            if (e.key === '/' && !isTextInput) {
                 e.preventDefault();
                 var chatInput = document.querySelector('.stChatInput textarea');
                 if (chatInput) { chatInput.focus(); }
