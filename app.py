@@ -600,8 +600,7 @@ if LIMIT_REACHED or st.session_state.force_login:
 with st.sidebar:
     st.markdown("<h2 style='text-align: center;'></h2>", unsafe_allow_html=True)
     st.markdown("<h3 style='text-align: center; margin-top: -20px;'>AI Powered Smart Education System</h3>", unsafe_allow_html=True)
-    st.markdown("---")
-    
+
     # New Chat Button
     if st.button(" New Chat", use_container_width=True):
         st.session_state.messages = []
@@ -630,8 +629,7 @@ with st.sidebar:
              st.session_state.force_login = True 
              st.rerun()
 
-    st.markdown("---")
-    
+
     # History Section
     if st.session_state.logged_in:
         st.markdown("###  History")
@@ -648,7 +646,7 @@ with st.sidebar:
         else:
             st.caption("No history yet.")
     
-    st.markdown("---")
+
 
 
 # --- Profile View ---
