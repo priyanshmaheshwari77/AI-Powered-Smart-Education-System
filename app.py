@@ -21,7 +21,7 @@ def get_orchestrator():
 # --- Page Config ---
 st.set_page_config(
     page_title="AI Powered Smart Education System",
-    page_icon="🔮",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -537,19 +537,19 @@ if LIMIT_REACHED or st.session_state.force_login:
 
 # --- Sidebar ---
 with st.sidebar:
-    st.markdown("<h2 style='text-align: center;'>🔮</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center;'></h2>", unsafe_allow_html=True)
     st.markdown("<h3 style='text-align: center; margin-top: -20px;'>AI Powered Smart Education System</h3>", unsafe_allow_html=True)
     st.markdown("---")
     
     # New Chat Button
-    if st.button("➕ New Chat", use_container_width=True):
+    if st.button(" New Chat", use_container_width=True):
         st.session_state.messages = []
         st.session_state.show_profile = False
         st.rerun()
 
     # Profile Dropdown
     if st.session_state.logged_in:
-        with st.expander(f"👤 {st.session_state.username}"):
+        with st.expander(f" {st.session_state.username}"):
             if st.button("My Profile"):
                 st.session_state.show_profile = True
                 st.rerun()
@@ -561,7 +561,7 @@ with st.sidebar:
                 st.session_state.show_profile = False
                 st.rerun()
     else:
-        st.info("👤 Guest Mode")
+        st.info(" Guest Mode")
         # Chat limit logic removed
         
         if st.button("Login / Signup"):
@@ -573,12 +573,12 @@ with st.sidebar:
     
     # History Section
     if st.session_state.logged_in:
-        st.markdown("### 🕒 History")
+        st.markdown("###  History")
         history = database.get_user_history(st.session_state.username)
         if history:
             for item in history:
                 # Use a unique key for each button
-                if st.button(f"📄 {item['topic']}", key=str(item['_id'])):
+                if st.button(f" {item['topic']}", key=str(item['_id'])):
                     # Load into chat
                     st.session_state.messages = [{"role": "user", "content": item['topic']}, 
                                                  {"role": "assistant", "content": item['full_content']}]
@@ -596,7 +596,7 @@ if st.session_state.show_profile and st.session_state.logged_in:
     if user_data:
         st.markdown(f"""
         <div class="glass-card">
-            <h1>👤 User Profile</h1>
+            <h1> User Profile</h1>
             <p><strong>Username:</strong> {user_data['username']}</p>
             <p><strong>Email:</strong> {user_data.get('email', 'N/A')}</p>
             <p><strong>Member Since:</strong> {user_data.get('join_date', 'Unknown')}</p>
@@ -633,7 +633,7 @@ with main_container:
             # 1. Article
             st.markdown("""
             <div style="background: #1e293b; border-left: 5px solid #38bdf8; padding: 10px 15px; margin: 20px 0; border-radius: 4px;">
-                <h3 style="margin: 0; color: #38bdf8; font-weight: bold;">📚 Course Material</h3>
+                <h3 style="margin: 0; color: #38bdf8; font-weight: bold;"> Course Material</h3>
             </div>
             """, unsafe_allow_html=True)
             st.markdown(content.get('article', ''))
@@ -643,7 +643,7 @@ with main_container:
             if flashcards and 'flashcards' in flashcards:
                 st.markdown("""
                 <div style="background: #1e293b; border-left: 5px solid #a855f7; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #d8b4fe; font-weight: bold;">🎴 Concept Flashcards</h3>
+                    <h3 style="margin: 0; color: #d8b4fe; font-weight: bold;"> Concept Flashcards</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 # Create a horizontal scroll or grid for flashcards
@@ -666,7 +666,7 @@ with main_container:
             if quiz and 'questions' in quiz:
                 st.markdown("""
                 <div style="background: #1e293b; border-left: 5px solid #ec4899; padding: 10px 15px; margin: 25px 0 15px 0; border-radius: 4px;">
-                    <h3 style="margin: 0; color: #f472b6; font-weight: bold;">🧠 Knowledge Check</h3>
+                    <h3 style="margin: 0; color: #f472b6; font-weight: bold;"> Knowledge Check</h3>
                 </div>
                 """, unsafe_allow_html=True)
                 st.markdown("""
@@ -706,9 +706,9 @@ with main_container:
                             is_correct = (ans_clean == corr_clean) or (ans_clean in corr_clean) or (corr_clean in ans_clean)
                             
                             if is_correct:
-                                st.success(f"✅ **Correct!** {q.get('explanation', '')}")
+                                st.success(f" **Correct!** {q.get('explanation', '')}")
                             else:
-                                st.error(f"❌ **Incorrect.** The correct answer was **{q['correct_answer']}**. {q.get('explanation', '')}")
+                                st.error(f" **Incorrect.** The correct answer was **{q['correct_answer']}**. {q.get('explanation', '')}")
                         st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown("---")
         else:
@@ -721,7 +721,7 @@ with main_container:
         st.session_state.messages.append({"role": "user", "content": prompt})
         
         if not os.getenv("GROQ_API_KEY"):
-            st.error("❌ Groq API Key is missing.")
+            st.error(" Groq API Key is missing.")
         else:
             with main_container:
                 with st.chat_message("user"):
@@ -731,7 +731,7 @@ with main_container:
                     status_placeholder = st.empty()
                     
                     try:
-                        status_placeholder.markdown("⚡ *Generating content...*")
+                        status_placeholder.markdown(" *Generating content...*")
                         final_content = get_orchestrator().run(prompt)
                         
                         status_placeholder.empty()

@@ -6,7 +6,7 @@ def render_custom_css():
     pass
 
 def render_login_form():
-    st.markdown("## 👋 Welcome Back")
+    st.markdown("##   Welcome Back")
     st.caption("Please login to access your learning history.")
     
     with st.form("login_form"):
@@ -30,7 +30,7 @@ def render_login_form():
                     st.error(msg)
 
 def render_signup_form():
-    st.markdown("## 🚀 Create Account")
+    st.markdown("##   Create Account")
     st.caption("Join EduAgent to save your courses forever.")
     
     with st.form("signup_form"):
@@ -57,7 +57,7 @@ def render_signup_form():
                     st.error(msg)
 
 def render_forgot_password():
-    st.markdown("## 🔐 Reset Password")
+    st.markdown("##   Reset Password")
     st.caption("Don't worry, it happens to the best of us.")
     
     with st.form("reset_form"):
