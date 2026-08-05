@@ -247,17 +247,7 @@ def inject_custom_style():
         outline-color: transparent !important;
     }}
     
-    div[data-testid="stChatInputContainer"]:focus-within,
-    div[data-testid="stChatInputContainer"]:focus,
-    div[data-testid="stChatInput"]:focus-within,
-    div[data-testid="stChatInput"]:focus,
-    .stChatInput:focus-within,
-    .stChatInput:focus {{
-        border-color: #22c55e !important;
-        border: 2px solid #22c55e !important;
-        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
-        outline: none !important;
-    }}
+
 
     /* =========================================
        CHAT MESSAGE STYLING (Solid Dark Mode)
