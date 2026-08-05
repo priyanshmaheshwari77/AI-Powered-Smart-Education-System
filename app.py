@@ -148,6 +148,11 @@ def inject_custom_style():
         background-color: #0f172a !important;
         color: #f8fafc !important;
     }}
+    
+    /* NUKE ANY NATIVE RED OUTLINES GLOBALLY */
+    *:focus, *:focus-visible, *:focus-within, *:active, * {{
+        outline-color: transparent !important;
+    }}
 
     /* 4. The inner content block (centering constraint) */
     .block-container {{
