@@ -955,7 +955,11 @@ with st.sidebar:
 
     # Profile Dropdown
     if st.session_state.logged_in:
-        with st.expander(f" {st.session_state.username}"):
+        display_name = st.session_state.username
+        if st.session_state.get('email') and st.session_state.get('email') != "Unknown":
+            display_name = f"{st.session_state.username} | {st.session_state.email}"
+            
+        with st.expander(f" {display_name}"):
             if st.button("My Profile"):
                 st.session_state.show_profile = True
                 st.rerun()

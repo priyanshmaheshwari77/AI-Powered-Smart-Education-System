@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import auth
+import re
 
 def render_custom_css():
     pass
@@ -23,6 +24,11 @@ def render_login_form():
                     st.success(msg)
                     st.session_state.logged_in = True
                     st.session_state.username = username
+                    
+                    # Fetch extra details for UI rendering
+                    user_data = auth.get_user(username)
+                    st.session_state.email = user_data["email"] if user_data else "Unknown"
+                    
                     st.session_state.force_login = False  # Ensure redirected to chat
                     st.rerun()
                 else:
@@ -39,8 +45,14 @@ def render_signup_form():
         submitted = st.form_submit_button("Sign Up", use_container_width=True, type="primary")
         
         if submitted:
-            if not new_user or not new_pass:
-                st.error("Username and Password are required.")
+            if not new_user or not new_pass or not new_email:
+                st.error("All fields are required.")
+            elif not re.match(r'^[A-Za-z]+$', new_user):
+                st.error("Username must only contain letters (no spaces, numbers, or special characters).")
+            elif not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', new_email):
+                st.error("Please enter a valid email format.")
+            elif not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', new_pass):
+                st.error("Password must be at least 8 characters long, containing 1 uppercase, 1 lowercase, 1 number, and 1 special character.")
             else:
                 success, msg = auth.signup_user(new_user, new_pass, new_email)
                 if success:
@@ -48,12 +60,12 @@ def render_signup_form():
                     # Auto Login Logic
                     st.session_state.logged_in = True
                     st.session_state.username = new_user
+                    st.session_state.email = new_email
                     st.session_state.force_login = False  # Ensure redirected to chat
                     time.sleep(1) # lush ux delay
                     st.rerun()
                 else:
                     st.error(msg)
-
 def render_forgot_password():
     st.markdown("<div style='text-align: center;'><h2 style='margin-bottom: 0px; font-weight: 700;'>Reset Password</h2><p style='color: #94a3b8; margin-top: 5px; font-size: 0.95rem; font-weight: 500;'>Don't worry, it happens to the best of us.</p></div>", unsafe_allow_html=True)
     
