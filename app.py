@@ -535,7 +535,7 @@ def inject_custom_style():
         color: #ffffff !important;
     }}
     
-    /* FIX STREAMLIT TABS BRIGHTNESS */
+    /* FIX STREAMLIT TABS BRIGHTNESS & BORDERS */
     button[data-baseweb="tab"] * {{
         color: #e2e8f0 !important;
         font-weight: 600 !important;
@@ -544,6 +544,19 @@ def inject_custom_style():
     }}
     button[data-baseweb="tab"][aria-selected="true"] * {{
         color: #60a5fa !important;
+    }}
+    
+    [data-baseweb="tab-highlight"] {{
+        background-color: #3b82f6 !important;
+    }}
+    
+    [data-baseweb="tab-border"] {{
+        background-color: transparent !important;
+        display: none !important;
+    }}
+    
+    div[role="tablist"] {{
+        border-bottom: none !important;
     }}
     
     [data-testid="stForm"] button {{

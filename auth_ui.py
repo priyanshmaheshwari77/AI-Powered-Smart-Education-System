@@ -6,8 +6,7 @@ def render_custom_css():
     pass
 
 def render_login_form():
-    st.markdown("##   Welcome Back")
-    st.caption("Please login to access your learning history.")
+    st.markdown("<div style='text-align: center;'><h2 style='margin-bottom: 0px; font-weight: 700;'>Welcome Back</h2><p style='color: #94a3b8; margin-top: 5px; font-size: 0.95rem; font-weight: 500;'>Please login to access your learning history.</p></div>", unsafe_allow_html=True)
     
     with st.form("login_form"):
         username = st.text_input("Username", placeholder="Enter your username")
@@ -30,8 +29,7 @@ def render_login_form():
                     st.error(msg)
 
 def render_signup_form():
-    st.markdown("##   Create Account")
-    st.caption("Join EduAgent to save your courses forever.")
+    st.markdown("<div style='text-align: center;'><h2 style='margin-bottom: 0px; font-weight: 700;'>Create Account</h2><p style='color: #94a3b8; margin-top: 5px; font-size: 0.95rem; font-weight: 500;'>Join EduAgent to save your courses forever.</p></div>", unsafe_allow_html=True)
     
     with st.form("signup_form"):
         new_user = st.text_input("Choose Username", placeholder="e.g. learner123")
@@ -57,8 +55,7 @@ def render_signup_form():
                     st.error(msg)
 
 def render_forgot_password():
-    st.markdown("##   Reset Password")
-    st.caption("Don't worry, it happens to the best of us.")
+    st.markdown("<div style='text-align: center;'><h2 style='margin-bottom: 0px; font-weight: 700;'>Reset Password</h2><p style='color: #94a3b8; margin-top: 5px; font-size: 0.95rem; font-weight: 500;'>Don't worry, it happens to the best of us.</p></div>", unsafe_allow_html=True)
     
     with st.form("reset_form"):
         f_user = st.text_input("Username")
