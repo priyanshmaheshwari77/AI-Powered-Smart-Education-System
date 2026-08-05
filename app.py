@@ -77,9 +77,16 @@ def inject_custom_style():
     
     /* Hide specific deployment/github icons */
     .stDeployButton {{display: none;}}
-    /* RESTORE MENU - Lock via CSS Instead */
-    [data-testid="stToolbar"] {{ 
-        visibility: visible !important; 
+    /* REMOVE ALL OTHER HEADER FEATURES (Fork, Deploy, Menu) */
+    [data-testid="stToolbar"],
+    #MainMenu,
+    header .stAppDeployButton,
+    .stAppDeployButton,
+    .stDeployButton {{
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }}
     
     /* ABSOLUTE DARK MODE LOCK - Ignores light toggle */
