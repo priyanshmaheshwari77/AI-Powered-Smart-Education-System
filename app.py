@@ -1042,6 +1042,7 @@ with main_container:
             }
             </style>
             <div style="text-align: center; margin-bottom: 2rem;">
+                <h3 style="color: #60a5fa; font-weight: 600; letter-spacing: 1px; margin-bottom: -10px;">Jay Shri Dadaji Ki 🙏</h3>
                 <h1 class="premium-title">AI Powered Smart Education System</h1>
                 <p style="font-size: 1.25rem; color: #94a3b8; font-weight: 500; letter-spacing: 0.5px;">Empowering your learning journey with dynamic articles, flashcards, and interactive quizzes.</p>
             </div>
