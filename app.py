@@ -799,7 +799,7 @@ def inject_keyboard_navigation():
             }
             
             // "?" — Toggle keyboard help (only if not already typing)
-            if (e.key === '?' && !isInput) {
+            if (e.key === '?' && !isTextInput) {
                 var help = document.getElementById('kbdHelp');
                 if (help) { help.classList.toggle('visible'); }
             }
