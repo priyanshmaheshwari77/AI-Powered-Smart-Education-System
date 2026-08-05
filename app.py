@@ -144,9 +144,9 @@ def inject_custom_style():
        ========================================= */
        
     /* STREAMLIT PRIMARY THEME VARIABLE LOCK */
-    :root, .stApp, section {
+    :root, .stApp, section {{
         --primary-color: #22c55e !important;
-    }
+    }}
 
     html, body {{
         background-color: #0f172a !important;
