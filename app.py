@@ -823,7 +823,7 @@ def inject_keyboard_navigation():
             var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
             
             var getClickables = function() {
-                return Array.from(document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div'))
+                return Array.from(document.querySelectorAll('button, input, textarea, select, a, [tabindex="0"]'))
                             .filter(el => {
                                 if (el.disabled || el.tabIndex < 0) return false;
                                 var rect = el.getBoundingClientRect();
