@@ -295,22 +295,33 @@ def inject_custom_style():
     }}
 
     /* =========================================
-       GLOBAL BUTTON STYLING (Solid Dark Mode)
+       PREMIUM BUTTON STYLING
        ========================================= */
     .stButton > button {{
-        background-color: #3b82f6 !important;
+        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 8px !important;
-        font-weight: 600 !important;
-        padding: 0.5rem 1rem !important;
-        transition: all 0.2s ease !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
+        padding: 0.65rem 1.5rem !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+        position: relative !important;
+        overflow: hidden !important;
     }}
     
     .stButton > button:hover {{
-        background-color: #60a5fa !important;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
-        transform: translateY(-1px) !important;
+        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%) !important;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.2) !important;
+        transform: translateY(-2px) scale(1.02) !important;
+    }}
+    
+    .stButton > button:active {{
+        transform: translateY(0px) scale(0.98) !important;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
     }}
     
     .stButton > button * {{
@@ -511,17 +522,28 @@ def inject_custom_style():
     }}
     
     [data-testid="stForm"] button {{
-        background-color: #3b82f6 !important;
+        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%) !important;
         color: white !important;
-        font-weight: bold !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
         border: none !important;
-        transition: all 0.3s ease !important;
+        border-radius: 12px !important;
+        padding: 0.75rem 2rem !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
     }}
     
     [data-testid="stForm"] button:hover {{
-        background-color: #60a5fa !important;
-        transform: scale(1.02) !important;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
+        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%) !important;
+        transform: translateY(-2px) scale(1.03) !important;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.2) !important;
+    }}
+    
+    [data-testid="stForm"] button:active {{
+        transform: translateY(0px) scale(0.98) !important;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
     }}
 
     /* =========================================
