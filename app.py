@@ -716,10 +716,32 @@ def inject_keyboard_navigation():
             document.body.classList.remove('keyboard-nav');
         });
         
+        // AGGRESSIVE TABINDEX ENFORCER: Ensure ALL buttons and inputs are focusable
+        setInterval(function() {
+            var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button');
+            clickables.forEach(function(el) {
+                if (!el.hasAttribute('tabindex')) {
+                    el.setAttribute('tabindex', '0');
+                }
+            });
+        }, 1500);
+        
         // Global keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             var tag = (e.target.tagName || '').toLowerCase();
+            var active = document.activeElement;
             var isInput = (tag === 'input' || tag === 'textarea' || e.target.isContentEditable);
+            
+            // "Enter" or "Space" — Click the currently focused element if it's a structural button
+            if ((e.key === 'Enter' || e.key === ' ') && active) {
+                // If it's a native form input or text area, let it act normally
+                if (tag !== 'input' && tag !== 'textarea' && active.getAttribute('role') !== 'radio') {
+                    if (typeof active.click === 'function') {
+                        e.preventDefault(); // Prevent page scroll on Space
+                        active.click();
+                    }
+                }
+            }
             
             // "/" — Focus the chat input (only if not already typing)
             if (e.key === '/' && !isInput) {
