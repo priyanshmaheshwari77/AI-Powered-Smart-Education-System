@@ -848,28 +848,12 @@ def inject_keyboard_navigation():
                             });
             };
             
-            // "Enter" (inside a text input) — Act like "Tab" to go to the next field
-            if (e.key === 'Enter' && isTextInput) {
-                e.preventDefault();
-                var clickables = getClickables();
-                var currentIndex = clickables.indexOf(active);
-                if (currentIndex > -1 && currentIndex < clickables.length - 1) {
-                    clickables[currentIndex + 1].focus();
-                }
-            }
-            
             // Omnidirectional Arrow Key Navigation
             if (arrowKeys.includes(e.key)) {
-                // If the user is typing in an input, ONLY let Down/Up jump fields. 
-                // Left/Right MUST move the text cursor instead.
-                if (isTextInput && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
-                    return; // Let the browser handle standard text editing
-                }
-                
-                // If it is a multiline textarea, let all arrow keys act normally
-                if (tag === 'textarea') {
-                    return;
-                }
+                // If the user is typing in an input field or textarea, 
+                // ENTIRELY release control to the browser.
+                // This allows native Autocomplete menus (ArrowDown/Up) and Text Caret movement (ArrowLeft/Right)
+                if (isTextInput || tag === 'textarea') return;
                 
                 e.preventDefault();
                 e.stopPropagation(); // Stop BaseWeb from stealing focus back!
