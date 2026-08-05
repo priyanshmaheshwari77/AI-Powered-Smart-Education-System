@@ -206,7 +206,7 @@ def inject_custom_style():
         background: transparent !important;
     }}
 
-    .stChatInput textarea {
+    .stChatInput textarea {{
         background-color: #1e293b !important;
         color: #ffffff !important;
         caret-color: #ffffff !important;
@@ -217,24 +217,24 @@ def inject_custom_style():
         outline: none !important;
         font-weight: 600 !important;
         font-size: 1.1rem !important;
-    }
+    }}
     
-    .stChatInput textarea::placeholder {
+    .stChatInput textarea::placeholder {{
         color: #94a3b8 !important;
         opacity: 1 !important;
-    }
+    }}
     
     .stChatInput textarea:focus,
     .stChatInput textarea:active,
     .stChatInput textarea:focus-visible,
-    .stChatInput textarea:focus-within {
+    .stChatInput textarea:focus-within {{
         background-color: #0f172a !important;
         border: 2px solid #22c55e !important;
         border-color: #22c55e !important;
         box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
         outline: none !important;
         outline-color: transparent !important;
-    }
+    }}
 
     div[data-testid=\"stChatInput\"] *,
     div[data-testid=\"stChatInputContainer\"] * {{
@@ -338,19 +338,19 @@ def inject_custom_style():
     
     [data-testid="stForm"] input,
     .stTextInput input,
-    .stTextInput textarea {
+    .stTextInput textarea {{
         background-color: transparent !important;
         color: #ffffff !important;
         font-weight: 600 !important;
         font-size: 1.15rem !important;
-    }
+    }}
 
     /* FIX GLOBAL INPUT FOCUS STATES (Green) */
     div[data-baseweb="input"]:focus-within,
-    div[data-baseweb="base-input"]:focus-within {
+    div[data-baseweb="base-input"]:focus-within {{
         border-color: #22c55e !important;
         box-shadow: 0 0 0 1px #22c55e !important;
-    }
+    }}
     
     /* GLOBAL MARKDOWN BRIGHTNESS */
     [data-testid="stMarkdownContainer"] * {{
