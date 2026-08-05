@@ -98,10 +98,14 @@ def inject_custom_style():
     }}
     
     /* ABSOLUTE DARK MODE LOCK - Ignores light toggle */
-    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
+    .stApp, [data-testid="stAppViewContainer"] {{
         background-color: #0f172a !important;
         background: #0f172a !important;
         color: #ffffff !important;
+    }}
+    [data-testid="stHeader"] {{
+        background-color: transparent !important;
+        background: transparent !important;
     }}
     .viewerBadge_container__1QSob {{display: none !important;}}
 
