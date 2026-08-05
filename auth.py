@@ -62,7 +62,7 @@ def login_user(username, password):
     """Wrapper for UI compatibility."""
     if login(username, password):
         return True, "Login successful!"
-    return False, "Invalid username or password."
+    return False, "Invalid or wrong credentials."
 
 def signup_user(username, password, email):
     """Wrapper for UI compatibility."""
