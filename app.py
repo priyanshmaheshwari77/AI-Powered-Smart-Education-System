@@ -770,56 +770,57 @@ def inject_keyboard_navigation():
     <script>
     (function() {
         var pDoc = window.parent.document;
-        // Clean up artifacts from previous Streamlit renders
-        if (window.parent.__eduvision_interval) clearInterval(window.parent.__eduvision_interval);
-        if (window.parent.__eduvision_keydown) pDoc.removeEventListener('keydown', window.parent.__eduvision_keydown, true);
-        if (window.parent.__eduvision_mousedown) pDoc.body.removeEventListener('mousedown', window.parent.__eduvision_mousedown, true);
-        
-        window.parent.__eduvision_mousedown = function(e){ e.stopPropagation(); };
-        pDoc.body.addEventListener('mousedown', window.parent.__eduvision_mousedown, true);
-        
-        window.parent.__eduvision_focus = window.parent.__eduvision_focus || { type: null, text: null, label: null };
-        function saveFoc(el) {
-            if (!el || el.tagName === 'BODY') return;
-            window.parent.__eduvision_focus = {
-                type: el.tagName,
-                text: el.innerText ? el.innerText.trim() : null,
-                label: el.getAttribute('aria-label') || el.name || null
-            };
+        if (pDoc.getElementById('eduvision-keyboard-injector')) {
+            return; // Already immortalized in the parent window.
         }
         
-        window.parent.__eduvision_interval = setInterval(function() {
-            var active = pDoc.activeElement;
+        var script = pDoc.createElement('script');
+        script.id = 'eduvision-keyboard-injector';
+        script.textContent = `
+            document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
             
-            if (!active || active.tagName === 'BODY') {
-                var mem = window.parent.__eduvision_focus;
-                if (mem.type) {
-                    var el = Array.from(pDoc.querySelectorAll(mem.type)).find(e => 
-                        (mem.label && (e.getAttribute('aria-label') === mem.label || e.name === mem.label)) ||
-                        (mem.text && e.innerText && e.innerText.trim() === mem.text)
-                    );
-                    if (el) el.focus();
-                }
-            } else { saveFoc(active); }
+            window.__eduvision_focus = window.__eduvision_focus || { type: null, text: null, label: null };
+            function saveFoc(el) {
+                if (!el || el.tagName === 'BODY') return;
+                window.__eduvision_focus = {
+                    type: el.tagName,
+                    text: el.innerText ? el.innerText.trim() : null,
+                    label: el.getAttribute('aria-label') || el.name || null
+                };
+            }
             
-            pDoc.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]').forEach(l => {
-                l.style.setProperty("justify-content", "center", "important");
-                l.style.setProperty("display", "flex", "important");
-                l.style.setProperty("width", "100%", "important");
-                l.style.setProperty("border-bottom", "none", "important");
-            });
-            pDoc.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]').forEach(el => {
-                el.style.setProperty("display", "none", "important");
-            });
+            setInterval(function() {
+                var active = document.activeElement;
             
-            pDoc.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"]').forEach(el => {
-                if (el.disabled || window.parent.getComputedStyle(el).display === 'none') return;
-                if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') el.setAttribute('tabindex', '0');
-            });
-        }, 300);
-        
-        window.parent.__eduvision_keydown = function(e) {
-            var active = pDoc.activeElement;
+                if (!active || active.tagName === 'BODY') {
+                    var mem = window.__eduvision_focus;
+                    if (mem.type) {
+                        var el = Array.from(document.querySelectorAll(mem.type)).find(e => 
+                            (mem.label && (e.getAttribute('aria-label') === mem.label || e.name === mem.label)) ||
+                            (mem.text && e.innerText && e.innerText.trim() === mem.text)
+                        );
+                        if (el) el.focus();
+                    }
+                } else { saveFoc(active); }
+                
+                document.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]').forEach(l => {
+                    l.style.setProperty("justify-content", "center", "important");
+                    l.style.setProperty("display", "flex", "important");
+                    l.style.setProperty("width", "100%", "important");
+                    l.style.setProperty("border-bottom", "none", "important");
+                });
+                document.querySelectorAll('[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]').forEach(el => {
+                    el.style.setProperty("display", "none", "important");
+                });
+                
+                document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"]').forEach(el => {
+                    if (el.disabled || window.getComputedStyle(el).display === 'none') return;
+                    if (!el.hasAttribute('tabindex') || el.getAttribute('tabindex') === '-1') el.setAttribute('tabindex', '0');
+                });
+            }, 300);
+            
+            document.addEventListener('keydown', function(e) {
+                var active = document.activeElement;
             var tag = (active && active.tagName) ? active.tagName.toLowerCase() : '';
             var isTextInput = (tag === 'input' && active.type !== 'radio' && active.type !== 'checkbox' && active.type !== 'range') || tag === 'textarea' || (active && active.isContentEditable);
             
@@ -844,15 +845,15 @@ def inject_keyboard_navigation():
             
             var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
             
-            var getClickables = function() {
-                return Array.from(pDoc.querySelectorAll('button, input, textarea, select, [role="tab"], [role="radio"]'))
-                            .filter(el => {
-                                if (el.disabled || el.tabIndex < 0 || el.offsetParent === null) return false;
-                                var label = (el.getAttribute('aria-label') || el.title || '').toLowerCase();
-                                if (label.includes('password text')) return false; // ignore eye icons
-                                return true;
-                            });
-            };
+                var getClickables = function() {
+                    return Array.from(document.querySelectorAll('button, input, textarea, select, [role="tab"], [role="radio"]'))
+                                .filter(el => {
+                                    if (el.disabled || el.tabIndex < 0 || el.offsetParent === null) return false;
+                                    var label = (el.getAttribute('aria-label') || el.title || '').toLowerCase();
+                                    if (label.includes('password text')) return false; // ignore eye icons
+                                    return true;
+                                });
+                };
             
             // Omnidirectional Arrow Key Navigation
             if (arrowKeys.includes(e.key)) {
@@ -894,40 +895,40 @@ def inject_keyboard_navigation():
             }
             
             // "/" — Focus the chat input (only if not already typing)
-            if (e.key === '/' && !isTextInput) {
-                e.preventDefault();
-                var chatInput = pDoc.querySelector('.stChatInput textarea');
-                if (chatInput) { chatInput.focus(); saveFoc(chatInput); }
-            }
-            if (e.key === '?' && !isTextInput) {
-                var help = pDoc.getElementById('kbdHelp');
-                if (help) { help.classList.toggle('visible'); }
-            }
-            if (e.key === 'Escape') {
-                if (active) active.blur();
-                var help = pDoc.getElementById('kbdHelp');
-                if (help) { help.classList.remove('visible'); }
-            }
-            if (e.altKey && e.key.toLowerCase() === 'n') {
-                e.preventDefault();
-                var buttons = pDoc.querySelectorAll('button');
-                for (var i = 0; i < buttons.length; i++) {
-                    if (buttons[i].textContent.trim().toUpperCase().includes('NEW CHAT')) {
-                        buttons[i].click();
-                        break;
+                if (e.key === '/' && !isTextInput) {
+                    e.preventDefault();
+                    var chatInput = document.querySelector('.stChatInput textarea');
+                    if (chatInput) { chatInput.focus(); saveFoc(chatInput); }
+                }
+                if (e.key === '?' && !isTextInput) {
+                    var help = document.getElementById('kbdHelp');
+                    if (help) { help.classList.toggle('visible'); }
+                }
+                if (e.key === 'Escape') {
+                    if (active) active.blur();
+                    var help = document.getElementById('kbdHelp');
+                    if (help) { help.classList.remove('visible'); }
+                }
+                if (e.altKey && e.key.toLowerCase() === 'n') {
+                    e.preventDefault();
+                    var buttons = document.querySelectorAll('button');
+                    for (var i = 0; i < buttons.length; i++) {
+                        if (buttons[i].textContent.trim().toUpperCase().includes('NEW CHAT')) {
+                            buttons[i].click();
+                            break;
+                        }
                     }
                 }
-            }
-            if (e.altKey && e.key.toLowerCase() === 's') {
-                e.preventDefault();
-                var sidebarBtn = pDoc.querySelector('[data-testid="stSidebarCollapsedControl"] button') ||
-                                 pDoc.querySelector('[data-testid="collapsedControl"] button') ||
-                                 pDoc.querySelector('button[kind="header"]');
-                if (sidebarBtn) { sidebarBtn.click(); }
-            }
-        };
-        
-        pDoc.addEventListener('keydown', window.parent.__eduvision_keydown, true);
+                if (e.altKey && e.key.toLowerCase() === 's') {
+                    e.preventDefault();
+                    var sidebarBtn = document.querySelector('[data-testid="stSidebarCollapsedControl"] button') ||
+                                     document.querySelector('[data-testid="collapsedControl"] button') ||
+                                     document.querySelector('button[kind="header"]');
+                    if (sidebarBtn) { sidebarBtn.click(); }
+                }
+            }, true);
+        `;
+        pDoc.head.appendChild(script);
     })();
     </script>
     """
