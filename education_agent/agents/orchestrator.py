@@ -7,20 +7,37 @@ from langchain_core.output_parsers import JsonOutputParser
 
 load_dotenv()
 
-MODEL_NAME = "llama-3.1-8b-instant"
+MODEL_NAME = "llama-3.3-70b-versatile"
 
-SINGLE_PROMPT = """You are an expert educator. Produce highly accurate and extremely concise educational content for the topic: {topic}.
+SINGLE_PROMPT = """You are a world-class educator and subject matter expert. Your task is to produce DETAILED, ACCURATE, and COMPREHENSIVE educational content about the topic the user searched for: {topic}.
 
-Return ONLY valid JSON (no markdown wrapping) matching exactly this format:
-{{"article": "An extremely brief 3-4 sentence summary of the topic.",
- "flashcards": {{"flashcards": [{{"concept": "Key Term 1", "description": "A very brief 1-sentence definition"}}, {{"concept": "Key Term 2", "description": "A very brief 1-sentence definition"}}]}},
- "quiz": {{"questions": [
-     {{"question": "Question 1 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice B", "explanation": "Why B is correct"}},
-     {{"question": "Question 2 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice C", "explanation": "Why C is correct"}},
-     {{"question": "Question 3 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice D", "explanation": "Why D is correct"}},
-     {{"question": "Question 4 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice A", "explanation": "Why A is correct"}},
-     {{"question": "Question 5 about the topic?", "options": ["Choice A", "Choice B", "Choice C", "Choice D"], "correct_answer": "Choice B", "explanation": "Why B is correct"}}
- ]}}
+CRITICAL RULES:
+- Be FACTUALLY ACCURATE. Do not hallucinate or invent information.
+- Cover the topic THOROUGHLY with real facts, dates, formulas, or examples as appropriate.
+- Write content that matches EXACTLY what the user typed — do not drift to a different subject.
+- Use clear, structured language suitable for a university-level student.
+
+Return ONLY valid JSON (no markdown wrapping, no code fences) matching exactly this structure:
+
+{{
+  "article": "Write a DETAILED educational article about the topic. Include:\\n\\n**Introduction:** Define the topic clearly and explain why it matters.\\n\\n**Core Concepts:** Cover 3-5 key ideas, principles, or components in depth. Use real-world examples, formulas, historical context, or step-by-step explanations as appropriate.\\n\\n**Key Details:** Include important facts, figures, dates, names, or technical details that a student would need to know.\\n\\n**Applications:** Explain how this topic is used in practice or its real-world significance.\\n\\n**Summary:** Conclude with a brief recap of the most important takeaways.\\n\\nThe article should be at least 8-10 paragraphs long and use markdown formatting (headers with ##, bold with **, bullet points with -, etc.) for readability.",
+
+  "flashcards": {{"flashcards": [
+    {{"concept": "Key Term 1", "description": "A clear, accurate 2-3 sentence explanation of this concept with an example if applicable."}},
+    {{"concept": "Key Term 2", "description": "A clear, accurate 2-3 sentence explanation of this concept with an example if applicable."}},
+    {{"concept": "Key Term 3", "description": "A clear, accurate 2-3 sentence explanation of this concept with an example if applicable."}},
+    {{"concept": "Key Term 4", "description": "A clear, accurate 2-3 sentence explanation of this concept with an example if applicable."}},
+    {{"concept": "Key Term 5", "description": "A clear, accurate 2-3 sentence explanation of this concept with an example if applicable."}},
+    {{"concept": "Key Term 6", "description": "A clear, accurate 2-3 sentence explanation of this concept with an example if applicable."}}
+  ]}},
+
+  "quiz": {{"questions": [
+    {{"question": "A challenging factual question about the topic?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option B", "explanation": "A thorough 2-3 sentence explanation of why this answer is correct and why the others are wrong."}},
+    {{"question": "A conceptual understanding question?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option C", "explanation": "A thorough 2-3 sentence explanation of why this answer is correct."}},
+    {{"question": "An application-based question?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option A", "explanation": "A thorough 2-3 sentence explanation of why this answer is correct."}},
+    {{"question": "A question testing deeper knowledge?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option D", "explanation": "A thorough 2-3 sentence explanation of why this answer is correct."}},
+    {{"question": "A question connecting concepts?", "options": ["Option A", "Option B", "Option C", "Option D"], "correct_answer": "Option B", "explanation": "A thorough 2-3 sentence explanation of why this answer is correct."}}
+  ]}}
 }}"""
 
 class Orchestrator:
