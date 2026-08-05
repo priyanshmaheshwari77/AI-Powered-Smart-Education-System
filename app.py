@@ -606,45 +606,41 @@ def inject_keyboard_navigation():
     st.markdown("""
     <style>
     /* =========================================
-       KEYBOARD FOCUS INDICATORS
+       KEYBOARD FOCUS INDICATORS (UNCONDITIONAL)
        ========================================= */
     
-    /* Show focus ring ONLY when using keyboard (not mouse clicks) */
-    body.keyboard-nav *:focus {
-        outline: 2px solid #3b82f6 !important;
-        outline-offset: 2px !important;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
-    }
-    
-    /* Buttons get a brighter ring */
-    body.keyboard-nav .stButton > button:focus,
-    body.keyboard-nav [data-testid="stForm"] button:focus {
-        outline: 2px solid #60a5fa !important;
+    /* Show bright focus ring on ALL interactive elements */
+    *:focus, *:focus-visible {
+        outline: 3px solid #60a5fa !important;
         outline-offset: 3px !important;
-        box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.4) !important;
+        box-shadow: 0 0 10px 4px rgba(59, 130, 246, 0.5) !important;
+        border-radius: 4px;
+        z-index: 9999;
     }
     
-    /* Sidebar items */
-    body.keyboard-nav section[data-testid="stSidebar"] button:focus {
-        outline: 2px solid #60a5fa !important;
-        outline-offset: 2px !important;
+    /* Specific overrides to look good on buttons */
+    .stButton > button:focus,
+    [data-testid="stForm"] button:focus,
+    button[data-baseweb="tab"]:focus {
+        outline: 3px solid #60a5fa !important;
+        outline-offset: 3px !important;
+        box-shadow: 0 0 12px 5px rgba(96, 165, 250, 0.7) !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Sidebar buttons */
+    section[data-testid="stSidebar"] button:focus {
         background-color: #1e293b !important;
     }
     
-    /* Tab buttons */
-    body.keyboard-nav button[data-baseweb="tab"]:focus {
-        outline: 2px solid #60a5fa !important;
-        outline-offset: 2px !important;
-    }
-    
     /* Radio buttons */
-    body.keyboard-nav [role="radiogroup"] [role="radio"]:focus {
-        outline: 2px solid #3b82f6 !important;
-        outline-offset: 2px !important;
+    [role="radiogroup"] [role="radio"]:focus {
+        outline: 3px solid #3b82f6 !important;
+        outline-offset: 3px !important;
     }
     
     /* Chat input */
-    body.keyboard-nav .stChatInput textarea:focus {
+    .stChatInput textarea:focus {
         outline: none !important;
         border: 2px solid #60a5fa !important;
         box-shadow: 0 0 20px rgba(96, 165, 250, 0.5) !important;
@@ -733,13 +729,8 @@ def inject_keyboard_navigation():
     
     <script>
     (function() {
-        // Detect keyboard vs mouse navigation
-        document.body.addEventListener('keydown', function(e) {
-            document.body.classList.add('keyboard-nav');
-        });
-        document.body.addEventListener('mousedown', function() {
-            document.body.classList.remove('keyboard-nav');
-        });
+        // Remove Streamlit's built-in focus-hiding behaviors manually
+        document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
         
         // AGGRESSIVE TABINDEX ENFORCER: Ensure ALL buttons and inputs are focusable
         setInterval(function() {
