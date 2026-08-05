@@ -2,5 +2,4 @@ streamlit
 langchain
 langchain-groq
 python-dotenv
-duckduckgo-search
 requests
