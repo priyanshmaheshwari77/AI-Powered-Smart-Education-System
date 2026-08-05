@@ -786,6 +786,7 @@ def inject_keyboard_navigation():
                 el.style.setProperty("height", "0px", "important");
                 el.style.setProperty("opacity", "0", "important");
             });
+
             
             var clickables = document.querySelectorAll('button, a, input, textarea, select, [role="button"], [role="tab"], [role="radio"], label[data-baseweb="radio"], [data-baseweb="tab"], .stButton > button, div[data-testid="stForm"] button, div[role="radiogroup"] > div');
             clickables.forEach(function(el) {
