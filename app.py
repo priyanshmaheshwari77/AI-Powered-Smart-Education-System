@@ -364,16 +364,16 @@ def inject_custom_style():
 
     
     /* BRIGHTEN ALL PLACEHOLDER TEXT GLOBALLY */
-    ::placeholder {
+    ::placeholder {{
         color: #cbd5e1 !important;
         opacity: 0.9 !important;
         font-weight: 500 !important;
-    }
+    }}
     
-    input::placeholder, textarea::placeholder {
+    input::placeholder, textarea::placeholder {{
         color: #cbd5e1 !important;
         opacity: 0.9 !important;
-    }
+    }}
 
     /* FIX GLOBAL INPUT FOCUS STATES (Green) */
     div[data-baseweb="input"]:focus-within,
