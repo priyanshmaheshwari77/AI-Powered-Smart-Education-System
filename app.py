@@ -143,6 +143,11 @@ def inject_custom_style():
        SOLID DARK LAYERS
        ========================================= */
        
+    /* OVERRIDE STREAMLIT INTERNAL PRIMARY COLOR VARIABLE TO GREEN */
+    :root, [data-testid="stAppViewContainer"], .stApp {{
+        --primary-color: #22c55e !important;
+    }}
+
     html, body {{
         background-color: #0f172a !important;
         color: #f8fafc !important;
