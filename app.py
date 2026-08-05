@@ -771,6 +771,13 @@ def inject_keyboard_navigation():
     (function() {
         document.body.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
         
+        setTimeout(function() {
+            if (document.activeElement === document.body) {
+                var firstBtn = document.querySelector('[data-testid="stSidebar"] button');
+                if (firstBtn) firstBtn.focus();
+            }
+        }, 1000);
+        
         setInterval(function() {
             var tabLists = document.querySelectorAll('div[data-baseweb="tab-list"], [role="tablist"]');
             tabLists.forEach(function(list) {
