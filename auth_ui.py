@@ -79,6 +79,27 @@ def render_auth_page():
     col1, col2, col3 = st.columns([1, 1.5, 1])
     
     with col2:
+        # Hyper-localized styling to utterly destroy the legacy red line and force centering
+        st.markdown("""
+            <style>
+                div[data-testid="stTabs"] div[data-baseweb="tab-list"] {
+                    justify-content: center !important;
+                    border-bottom: 0px solid transparent !important;
+                    margin-bottom: 0px !important;
+                }
+                div[data-testid="stTabs"] button[data-baseweb="tab"] {
+                    border-bottom-width: 0px !important;
+                }
+                div[data-testid="stTabs"] [data-baseweb="tab-highlight"], 
+                div[data-testid="stTabs"] [data-baseweb="tab-border"] {
+                    display: none !important;
+                    visibility: hidden !important; 
+                }
+                div[data-testid="stTabs"] button[data-baseweb="tab"][aria-selected="true"] {
+                    border-bottom: 3px solid #3b82f6 !important;
+                }
+            </style>
+        """, unsafe_allow_html=True)
         # Auth Mode Switcher (Tabs)
         tabs = st.tabs(["Login", "Sign Up", "Recovery"])
         
